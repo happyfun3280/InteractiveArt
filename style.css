@@ -1,0 +1,28 @@
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.mainArtCard {
+    display: inline-block;
+    width: 200px;
+    height: 250px;
+    background: black;
+}
+
+.backBtn {
+    background: white;
+    width: 100%;
+    height: 50px;
+    border: none;
+    font-size: 20px;
+}
+
+.backBtn:hover {
+    background: rgb(230, 230, 230);
+    font-size: 22px;
+}
