@@ -25,7 +25,7 @@ class Gallery {
     }
 
     create() {
-        if (!this.isMain) return;
+        if (this.p !== undefined) this.p.remove();
         this.isMain = false;
         this.p = new p5((p) => {
             p.setup = () => {
@@ -35,6 +35,7 @@ class Gallery {
                 backBtn.addClass('backBtn');
                 backBtn.mousePressed(() => {
                     p.remove();
+                    p = undefined;
                     this.isMain = true;
                 });
                 this.art.setup(p);

@@ -9,6 +9,7 @@
     <script src="./script.js"></script>
     <script src="./arts/balloonArt.js"></script>
     <script src="./arts/circleArt.js"></script>
+    <script src="./arts/newArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -24,7 +25,7 @@
             <img src="./images/circleArt.png" alt="">
             <div class="maker">Chan Hee</div>
         </span>
-        <span class="mainArtCard empty">
+        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new NewArt(100, 120, 180));">
             <div class="title">Empty</div>
             <img src="./images/none.png" alt="">
             <div class="maker">X</div>
