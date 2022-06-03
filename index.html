@@ -8,22 +8,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
     <script src="./script.js"></script>
     <script src="./arts/balloonArt.js"></script>
+    <script src="./arts/circleArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div id="p5Container"></div>
     <div id="mainContainer">
-        <span id="balloonArt" class="mainArtCard" onclick="Gallery.getInst().openArt(new BalloonArt(200, 200, 255));">
+        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new BalloonArt(200, 200, 255));">
             <div class="title">Balloon</div>
             <img src="./images/balloonArt.png" alt="">
             <div class="maker">Sol Chan</div>
         </span>
-        <span id="1Art" class="mainArtCard empty">
-            <div class="title">Empty</div>
-            <img src="./images/none.png" alt="">
-            <div class="maker">X</div>
+        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new CircleArt(120, 120, 230));">
+            <div class="title">Circle</div>
+            <img src="./images/circleArt.png" alt="">
+            <div class="maker">Chan Hee</div>
         </span>
-        <span id="2Art" class="mainArtCard empty">
+        <span class="mainArtCard empty">
             <div class="title">Empty</div>
             <img src="./images/none.png" alt="">
             <div class="maker">X</div>

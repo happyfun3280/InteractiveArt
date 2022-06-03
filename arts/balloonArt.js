@@ -1,6 +1,6 @@
 class BalloonArt extends Art {
-    constructor(red, blue, green) {
-        super(red, blue, green);
+    constructor(red, green, blue) {
+        super(red, green, blue);
         this.CHANGE_LEVEL = 8;
         this.circleSize = 80;
         this.color_R = 0;
@@ -16,8 +16,8 @@ class BalloonArt extends Art {
     }
 
     draw(p) {
+        super.draw(p);
         p.background(this.bgc.r, this.bgc.b, this.bgc.r);
-        console.log(this.bgc);
 
         if(p.mouseX<Gallery.getInst().canvasWidth/2 && p.mouseY<Gallery.getInst().canvasHeight/2){
             this.color_R = 255;

@@ -47,14 +47,43 @@ class Gallery {
 }
 
 class Art {
-    constructor(red, blue, green) {
-        this.bgc = { r: red, b: blue, g: green };
+    constructor(red, green, blue) {
+        this.sTime = new Date().getTime();
+        this.eTime = new Date().getTime();
+        this.deltaTime = this.eTime - this.sTime;
+        this.bgc = { r: red, g: green, b: blue };
     }
 
+    getDeltaTime() { return this.deltaTime; }
+
     setup(p) {
-        p.background(this.bgc.r, this.bgc.b, this.bgc.r);
+        p.background(this.bgc.r, this.bgc.g, this.bgc.b);
     }
 
     draw(p) {
+        this.eTime = new Date().getTime();
+        this.deltaTime = this.eTime - this.sTime;
+        this.sTime = new Date().getTime();
+    }
+}
+
+class Timer {
+    constructor(limit) {
+        this.count = 0;
+        this.limit = limit;
+    }
+    
+    timeover(delta) {
+        this.count += delta;
+        if (this.count < this.limit) return false;
+        this.count -= this.limit;
+        return true;
+    }
+
+    change(newLimit) {
+        if (newLimit >= 0) this.limit = newLimit;
+        else {
+            this.limit = 0;
+        }
     }
 }
