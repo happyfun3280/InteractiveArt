@@ -1,7 +1,12 @@
+html {
+    height: 100%;
+}
+
 body {
     user-select: none;
     overflow: hidden;
     margin: 0;
+    height: 100%;
 }
 
 .hidden {
@@ -21,12 +26,12 @@ body {
 }
 
 #mainContainer {
-    overflow-y: auto;
-    margin: 10px;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .mainArtCard {
-    margin: 5px;
+    margin: 10px;
     display: inline-block;
     width: 200px;
     height: 250px;
