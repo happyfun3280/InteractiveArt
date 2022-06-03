@@ -1,4 +1,5 @@
 body {
+    user-select: none;
     overflow: hidden;
     margin: 0;
 }
@@ -7,11 +8,49 @@ body {
     display: none;
 }
 
+#mainContainer {
+    margin: 10px;
+}
+
 .mainArtCard {
+    margin: 5px;
     display: inline-block;
     width: 200px;
     height: 250px;
-    background: black;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 7px black;
+}
+
+.mainArtCard:hover:not(.empty) {
+    transform: scale(1.05, 1.05);
+}
+
+.mainArtCard:active:not(.empty) {
+    transform: scale(1, 1);
+}
+
+.mainArtCard > .title {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px;
+}
+
+.mainArtCard > img {
+    width: 100%;
+    height: 60%;
+}
+
+.mainArtCard > .maker {
+    margin: 25px 5px 0;
+    text-align: right;
+    color:rgb(150, 150, 150);
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.mainArtCard > .maker::before {
+    content: "Made by ";
 }
 
 .backBtn {
