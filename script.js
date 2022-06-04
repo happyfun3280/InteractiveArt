@@ -31,18 +31,32 @@ class Gallery {
             p.setup = () => {
                 p.createCanvas(this.canvasWidth, this.canvasHeight);
                 let backBtn = p.createButton("Back");
-                backBtn.position(0, 0);
-                backBtn.addClass('backBtn');
+                backBtn.position(20, 20);
+                backBtn.addClass('topBtn back');
                 backBtn.mousePressed(() => {
                     p.remove();
                     p = undefined;
                     this.isMain = true;
                 });
+
+                let infoBtn = p.createButton("Info");
+                infoBtn.position(90, 20);
+                infoBtn.addClass('topBtn info');
+                infoBtn.mousePressed(() => {
+                });
+
+
                 this.art.setup(p);
             };
             p.draw = () => {
                 this.art.draw(p);
             };
+            p.windowResized = () => {
+                this.canvasWidth = innerWidth;
+                this.canvasHeight = innerHeight;
+                p.resizeCanvas(this.canvasWidth, this.canvasHeight);
+                this.art.windowResized(p);
+            }
         }, this.p5Container);
     }
 }
@@ -65,6 +79,9 @@ class Art {
         this.eTime = new Date().getTime();
         this.deltaTime = this.eTime - this.sTime;
         this.sTime = new Date().getTime();
+    }
+    windowResized(p) {
+        p.background(this.bgc.r, this.bgc.g, this.bgc.b);
     }
 }
 

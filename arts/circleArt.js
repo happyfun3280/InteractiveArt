@@ -1,12 +1,18 @@
 class CircleArt extends Art {
-    constructor(red, green, blue) {
+    constructor(red, green, blue, settings) {
         super(red, green, blue);
 
         this.ellipseList = [];
-        this.MAXSIZE = 100;
 
-        this.createTimer = new Timer(30);
-        this.clickTimer = new Timer(50);
+        if (settings === undefined) {
+            this.maxSize = 100;
+            this.blueTimer = new Timer(30);
+            this.redTimer = new Timer(50);
+        } else {
+            this.maxSize = (settings.maxSize === undefined) ? 100 : settings.maxSize;
+            this.blueTimer = new Timer((settings.blueTime === undefined) ? 30 : settings.blueTime);
+            this.redTimer = new Timer((settings.redTime === undefined) ? 50 : settings.redTime);
+        }
     }
 
     getEllipses() { return this.ellipseList; }
@@ -18,7 +24,7 @@ class CircleArt extends Art {
 
     draw(p) {
         super.draw(p);
-        if (this.createTimer.timeover(this.getDeltaTime())) {
+        if (this.blueTimer.timeover(this.getDeltaTime())) {
             this.getEllipses().push({
                 x: Math.floor(Math.random() * Gallery.getInst().canvasWidth),
                 y: Math.floor(Math.random() * Gallery.getInst().canvasHeight),
@@ -31,7 +37,7 @@ class CircleArt extends Art {
         }
 
         if (p.mouseIsPressed) {
-            if (this.clickTimer.timeover(this.getDeltaTime())) {
+            if (this.redTimer.timeover(this.getDeltaTime())) {
                 this.getEllipses().push({
                     x: p.mouseX,
                     y: p.mouseY,
@@ -44,6 +50,7 @@ class CircleArt extends Art {
             }
         }
 
+        let maxSize = Gallery.getInst().canvasWidth / 8;
         for (let i = 0; i < this.getEllipses().length; i++) {
             let e = this.getEllipses()[i];
 
@@ -51,7 +58,7 @@ class CircleArt extends Art {
             p.ellipse(e.x, e.y, e.w, e.h);
             e.w++;
             e.h++;
-            if (e.w > this.MAXSIZE) {
+            if (e.w > maxSize) {
                 this.getEllipses().splice(i, 1);
                 i--;
                 continue;

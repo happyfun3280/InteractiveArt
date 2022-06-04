@@ -9,7 +9,7 @@
     <script src="./script.js"></script>
     <script src="./arts/balloonArt.js"></script>
     <script src="./arts/circleArt.js"></script>
-    <script src="./arts/newArt.js"></script>
+    <script src="./arts/umbrellaArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -20,15 +20,15 @@
             <img src="./images/balloonArt.png" alt="">
             <div class="maker">Sol Chan</div>
         </span>
-        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new CircleArt(120, 120, 230));">
+        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new CircleArt(120, 120, 230, { maxSize: 120, blueTime: 30, redTime: 50 }));">
             <div class="title">Circle</div>
             <img src="./images/circleArt.png" alt="">
             <div class="maker">Chan Hee</div>
         </span>
-        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new NewArt(100, 120, 180));">
-            <div class="title">Empty</div>
-            <img src="./images/none.png" alt="">
-            <div class="maker">X</div>
+        <span class="mainArtCard" onclick="Gallery.getInst().openArt(new UmbrellaArt(100, 100, 130, { rdLen: 15, rdTime: 10, visible: false }));">
+            <div class="title">Umbrella</div>
+            <img src="./images/umbrellaArt.png" alt="">
+            <div class="maker">Chan Hee</div>
         </span>
     </div>
     <script>
