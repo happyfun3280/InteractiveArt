@@ -65,7 +65,7 @@ class UmbrellaArt extends Art {
     drawUmbrella(p) {
         p.noFill();
         p.stroke(0);
-        p.strokeWeight(5);
+        p.strokeWeight(7);
         let x = this.x;
         let y = this.y;
         let halfWidth = this.width / 2;
@@ -110,7 +110,7 @@ class UmbrellaArt extends Art {
             this.raindropList.push({
                 x: Math.floor(Math.random() * Gallery.getInst().canvasWidth),
                 y: 0,
-                v: level,
+                v: level + 5,
                 b: 50 + 30 * level
             });
         }
@@ -135,20 +135,20 @@ class UmbrellaArt extends Art {
                     let raindrop = {
                         x: 0,
                         y: this.y + this.height / 2 + 30,
-                        v: level,
+                        v: level + 5,
                         b: 50 + 30 * level
                     }
                     let randomGap = Math.random() * 10;
                     if (j === 0) {
                         if (r.x <= this.x) {
-                            raindrop.x = this.x - this.width / 2 + randomGap;
+                            raindrop.x = this.x - this.width / 2 - randomGap;
                         } else {
-                            raindrop.x = this.x + this.width / 2 - randomGap;
+                            raindrop.x = this.x + this.width / 2 + randomGap;
                         }
                     } else if (j % 2 === 1) {
-                        raindrop.x = this.x - this.width / 2 + randomGap;
+                        raindrop.x = this.x - this.width / 2 - randomGap;
                     } else {
-                        raindrop.x = this.x + this.width / 2 - randomGap;
+                        raindrop.x = this.x + this.width / 2 + randomGap;
                     }
                     this.raindropList.push(raindrop);
 
@@ -173,7 +173,7 @@ class UmbrellaArt extends Art {
     
     drawGround(p) {
         p.noStroke();
-        p.fill(80, 40, 40);
+        p.fill(100, 70, 70);
         p.rect(0, Gallery.getInst().canvasHeight - this.ground, Gallery.getInst().canvasWidth, this.ground);
     }
 
@@ -219,7 +219,6 @@ class UmbrellaArt extends Art {
 
     draw(p) {
         super.draw(p);
-        console.log(this.deltaTime);
         p.background(this.bgc.r, this.bgc.g, this.bgc.b);
 
         if (p.mouseIsPressed) {
