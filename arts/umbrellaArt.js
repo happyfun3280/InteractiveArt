@@ -7,10 +7,12 @@ class UmbrellaArt extends Art {
         this.disappearTime = 2000;
         if (settings === undefined) {
             this.rdLen = 20;
+            this.rdWeight = 5;
             this.rdCreateTimer = new Timer(100);
             this.collisionAreaVisible = false;
         } else {
             this.rdLen = (settings.rdLen === undefined) ? 20 : settings.rdLen;
+            this.rdWeight = (settings.rdWeight === undefined) ? 5 : settings.rdWeight;
             this.rdCreateTimer = new Timer((settings.rdTime === undefined) ? 100 : settings.rdTime);
             this.collisionAreaVisible = (settings.visible === undefined) ? false : settings.visible;
         }
@@ -63,7 +65,7 @@ class UmbrellaArt extends Art {
     drawUmbrella(p) {
         p.noFill();
         p.stroke(0);
-        p.strokeWeight(4);
+        p.strokeWeight(5);
         let x = this.x;
         let y = this.y;
         let halfWidth = this.width / 2;
@@ -83,7 +85,7 @@ class UmbrellaArt extends Art {
             tipX += tipGap;
         }
 
-        p.strokeWeight(5);
+        p.strokeWeight(6);
         let stickLength = this.height * 1.5;
         let gap = 5;
         let gripWidth = this.width / 20;
@@ -161,7 +163,7 @@ class UmbrellaArt extends Art {
     drawRaindrop(p) {
         for (let i = 0; i < this.raindropList.length; i++) {
             let r = this.raindropList[i];
-            p.strokeWeight(5.0);
+            p.strokeWeight(this.rdWeight);
             p.strokeCap(p.ROUND);
             p.stroke(20, 20, r.b);
             p.line(r.x, r.y, r.x, r.y - this.rdLen);
