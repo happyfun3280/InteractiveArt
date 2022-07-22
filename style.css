@@ -18,6 +18,12 @@ body {
     #container {
         grid-template-columns: 32vw 32vw 32vw;
         grid-auto-rows: 32vw;
+        grid-template-areas:"ball ball umbr" 
+                            "ball ball umbr"
+                            "rect circ .   "
+                            ".    .    .   "
+                            ".    .    .   "
+                            ".    .    .   ";
     }
 }
 
@@ -25,6 +31,12 @@ body {
     #container {
         grid-template-columns: 24vw 24vw 24vw 24vw;
         grid-auto-rows: 24vw;
+        grid-template-areas:"ball ball rect umbr" 
+                            "ball ball circ umbr"
+                            ".    .    .    .   "
+                            ".    .    .    .   "
+                            ".    .    .    .   "
+                            ".    .    .    .   ";
     }
 }
 
@@ -32,6 +44,12 @@ body {
     #container {
         grid-template-columns: 19vw 19vw 19vw 19vw 19vw;
         grid-auto-rows: 19vw;
+        grid-template-areas:"ball ball .    umbr rect" 
+                            "ball ball circ umbr .   "
+                            ".    .    .    .    .   "
+                            ".    .    .    .    .   "
+                            ".    .    .    .    .   "
+                            ".    .    .    .    .   ";
     }
 }
 
@@ -39,6 +57,12 @@ body {
     #container {
         grid-template-columns: 16vw 16vw 16vw 16vw 16vw 16vw;
         grid-auto-rows: 16vw;
+        grid-template-areas:"ball ball .    umbr rect ." 
+                            "ball ball circ umbr .    ."
+                            ".    .    .    .    .    ."
+                            ".    .    .    .    .    ."
+                            ".    .    .    .    .    ."
+                            ".    .    .    .    .    .";
     }
 }
 
@@ -65,28 +89,12 @@ body {
     border-radius: 20px;
 }
 
-.card#balloonArt {
-    grid-area: 1 / 1 / span 2 / span 2;
-    background: skyblue;
-}
-.card#circleArt {
-    background: red;
-}
-.card#umbrellaArt {
-    grid-area: 1 / 4 / span 2 / span 1;
-    background: orange;
-}
-.card#rectangleArt {
-    background: violet;
-}
-
 .card#blank {
     background: rgb(50, 50, 50);
 }
 
 .card:hover {
     cursor: pointer;
-    filter: blur(10);
 }
 
 .card > img {
@@ -109,6 +117,13 @@ body {
     content: "Made by ";
 }
 
+.card {
+}
+
+#balloonArt { grid-area: ball; }
+#circleArt { grid-area: circ; }
+#umbrellaArt { grid-area: umbr; }
+#rectangleArt { grid-area: rect; }
 
 #p5Container {
     overflow: hidden;
