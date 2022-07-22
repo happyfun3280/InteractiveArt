@@ -6,8 +6,6 @@ class Gallery {
         this.mainContainer = undefined;
         this.p = undefined;
         this.art = undefined;
-
-        this.isMain = true;
     }
 
     static getInst() {
@@ -18,33 +16,39 @@ class Gallery {
     }
 
     setContainers(p5Container, mainContainer) { this.p5Container = p5Container; this.mainContainer = mainContainer; }
-    selectArt(art) { this.art = art; }
+
     openArt(art) {
-        this.selectArt(art);
+        this.art = art;
         this.create();
     }
 
     create() {
         if (this.p !== undefined) this.p.remove();
-        this.isMain = false;
+        this.mainContainer.classList.add("hidden");
         this.p = new p5((p) => {
             p.setup = () => {
                 p.createCanvas(this.canvasWidth, this.canvasHeight);
+
                 let backBtn = p.createButton("Back");
                 backBtn.position(20, 20);
                 backBtn.addClass('topBtn back');
                 backBtn.mousePressed(() => {
                     p.remove();
                     p = undefined;
-                    this.isMain = true;
+                    this.mainContainer.classList.remove("hidden");
+                });
+
+                let settingBtn = p.createButton("Settings");
+                settingBtn.position(90, 20);
+                settingBtn.addClass('topBtn setting');
+                settingBtn.mousePressed(() => {
                 });
 
                 let infoBtn = p.createButton("Info");
-                infoBtn.position(90, 20);
+                infoBtn.position(185, 20);
                 infoBtn.addClass('topBtn info');
                 infoBtn.mousePressed(() => {
                 });
-
 
                 this.art.setup(p);
             };

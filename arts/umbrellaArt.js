@@ -1,7 +1,6 @@
 class UmbrellaArt extends Art {
     constructor(red, green, blue, settings) {
         super(red, green, blue);
-
         this.raindropList = [];
         this.wetList = [];
         this.disappearTime = 2000;
