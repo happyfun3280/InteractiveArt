@@ -71,6 +71,10 @@ class Art {
         this.eTime = new Date().getTime();
         this.deltaTime = this.eTime - this.sTime;
         this.bgc = { r: red, g: green, b: blue };
+
+        this.pressed = false;
+        this.held = false;
+        this.released = false;
     }
 
     getDeltaTime() { return this.deltaTime; }
@@ -83,6 +87,16 @@ class Art {
         this.eTime = new Date().getTime();
         this.deltaTime = this.eTime - this.sTime;
         this.sTime = new Date().getTime();
+
+        if (p.mouseIsPressed) {
+            if (this.held) this.pressed = false;
+            else this.pressed = true;
+            this.held = true;
+        } else {
+            if (this.held) this.released = true;
+            else this.released = false;
+            this.held = false;
+        }
     }
     windowResized(p) {
         p.background(this.bgc.r, this.bgc.g, this.bgc.b);

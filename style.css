@@ -33,7 +33,7 @@ body {
         grid-auto-rows: 24vw;
         grid-template-areas:"ball ball rect umbr" 
                             "ball ball circ umbr"
-                            ".    .    .    .   "
+                            ".    mirr .    .   "
                             ".    .    .    .   "
                             ".    .    .    .   "
                             ".    .    .    .   ";
@@ -46,7 +46,7 @@ body {
         grid-auto-rows: 19vw;
         grid-template-areas:"ball ball .    umbr rect" 
                             "ball ball circ umbr .   "
-                            ".    .    .    .    .   "
+                            ".    mirr .    .    .   "
                             ".    .    .    .    .   "
                             ".    .    .    .    .   "
                             ".    .    .    .    .   ";
@@ -59,7 +59,7 @@ body {
         grid-auto-rows: 16vw;
         grid-template-areas:"ball ball .    umbr rect ." 
                             "ball ball circ umbr .    ."
-                            ".    .    .    .    .    ."
+                            ".    mirr .    .    .    ."
                             ".    .    .    .    .    ."
                             ".    .    .    .    .    ."
                             ".    .    .    .    .    .";
@@ -89,8 +89,8 @@ body {
     border-radius: 20px;
 }
 
-.card#blank {
-    background: rgb(50, 50, 50);
+.card.blank {
+    background: linear-gradient(to bottom right, rgb(70, 70, 70), rgb(50, 50, 50));
 }
 
 .card:hover {
@@ -113,6 +113,10 @@ body {
     font-weight: bold;
 }
 
+.card > .title.dark {
+    color: rgba(0, 0, 0, 0.6)
+}
+
 .card > .title::before {
     content: "Made by ";
 }
@@ -124,6 +128,7 @@ body {
 #circleArt { grid-area: circ; }
 #umbrellaArt { grid-area: umbr; }
 #rectangleArt { grid-area: rect; }
+#mirrorArt { grid-area: mirr; }
 
 #p5Container {
     overflow: hidden;

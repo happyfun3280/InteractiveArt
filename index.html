@@ -11,6 +11,7 @@
     <script src="./arts/circleArt.js"></script>
     <script src="./arts/umbrellaArt.js"></script>
     <script src="./arts/rectangleArt.js"></script>
+    <script src="./arts/mirrorArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -19,7 +20,7 @@
     <div id="container">
         <span id="balloonArt" class="card">
             <img src="./imgs/balloonArt.png" alt="">
-            <span class="title">Sol Chan</span>
+            <span class="title dark">Sol Chan</span>
         </span>
         <span id="circleArt" class="card">
             <img src="./imgs/circleArt.png" alt="">
@@ -31,30 +32,44 @@
         </span>
         <span id="rectangleArt" class="card">
             <img src="./imgs/rectangleArt.png" alt="">
-            <span class="title">Sol Chan</span>
+            <span class="title dark">Sol Chan</span>
         </span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
-        <span id="blank" class="card"></span>
+        <span id="mirrorArt" class="card">
+            <img src="./imgs/mirrorArt.png" alt="">
+            <span class="title dark">Chan Hee</span>
+        </span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
+        <span class="card blank"></span>
     </div>
     <script>
         const p5Container = document.getElementById("p5Container");
@@ -72,6 +87,9 @@
         })
         document.getElementById("rectangleArt").addEventListener("click", (e) => {
             Gallery.getInst().openArt(new RectangleArt(255, 255, 255, {}));
+        })
+        document.getElementById("mirrorArt").addEventListener("click", (e) => {
+            Gallery.getInst().openArt(new MirrorArt(220, 220, 220, {}));
         })
     </script>
 </body>
