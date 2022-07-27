@@ -12,6 +12,7 @@
     <script src="./arts/umbrellaArt.js"></script>
     <script src="./arts/rectangleArt.js"></script>
     <script src="./arts/mirrorArt.js"></script>
+    <script src="./arts/cosmosArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -37,6 +38,10 @@
         <span id="mirrorArt" class="card">
             <img src="./imgs/mirrorArt.png" alt="">
             <span class="title dark">Chan Hee</span>
+        </span>
+        <span id="cosmosArt" class="card">
+            <img src="./imgs/cosmosArt.png" alt="">
+            <span class="title">Chan Hee</span>
         </span>
         <span class="card blank"></span>
         <span class="card blank"></span>
@@ -91,6 +96,10 @@
         document.getElementById("mirrorArt").addEventListener("click", (e) => {
             Gallery.getInst().openArt(new MirrorArt(220, 220, 220, {}));
         })
+        document.getElementById("cosmosArt").addEventListener("click", (e) => {
+            Gallery.getInst().openArt(new CosmosArt(0, 0, 0, {}));
+        })
+        
     </script>
 </body>
 </html>

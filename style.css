@@ -20,9 +20,9 @@ body {
         grid-auto-rows: 32vw;
         grid-template-areas:"ball ball umbr" 
                             "ball ball umbr"
-                            "rect circ .   "
-                            ".    .    .   "
-                            ".    .    .   "
+                            "rect circ mirr"
+                            ".    cosm cosm"
+                            ".    cosm cosm"
                             ".    .    .   ";
     }
 }
@@ -33,8 +33,8 @@ body {
         grid-auto-rows: 24vw;
         grid-template-areas:"ball ball rect umbr" 
                             "ball ball circ umbr"
-                            ".    mirr .    .   "
-                            ".    .    .    .   "
+                            ".    mirr cosm cosm"
+                            ".    .    cosm cosm"
                             ".    .    .    .   "
                             ".    .    .    .   ";
     }
@@ -46,8 +46,8 @@ body {
         grid-auto-rows: 19vw;
         grid-template-areas:"ball ball .    umbr rect" 
                             "ball ball circ umbr .   "
-                            ".    mirr .    .    .   "
-                            ".    .    .    .    .   "
+                            ".    mirr cosm cosm .   "
+                            ".    .    cosm cosm .   "
                             ".    .    .    .    .   "
                             ".    .    .    .    .   ";
     }
@@ -59,8 +59,8 @@ body {
         grid-auto-rows: 16vw;
         grid-template-areas:"ball ball .    umbr rect ." 
                             "ball ball circ umbr .    ."
-                            ".    mirr .    .    .    ."
-                            ".    .    .    .    .    ."
+                            ".    mirr cosm cosm .    ."
+                            ".    .    cosm cosm .    ."
                             ".    .    .    .    .    ."
                             ".    .    .    .    .    .";
     }
@@ -129,6 +129,7 @@ body {
 #umbrellaArt { grid-area: umbr; }
 #rectangleArt { grid-area: rect; }
 #mirrorArt { grid-area: mirr; }
+#cosmosArt { grid-area: cosm; }
 
 #p5Container {
     overflow: hidden;
