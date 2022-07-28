@@ -13,6 +13,7 @@
     <script src="./arts/rectangleArt.js"></script>
     <script src="./arts/mirrorArt.js"></script>
     <script src="./arts/cosmosArt.js"></script>
+    <script src="./arts/buttonArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -41,6 +42,10 @@
         </span>
         <span id="cosmosArt" class="card">
             <img src="./imgs/cosmosArt.png" alt="">
+            <span class="title">Chan Hee</span>
+        </span>
+        <span id="buttonArt" class="card">
+            <img src="./imgs/buttonArt.png" alt="">
             <span class="title">Chan Hee</span>
         </span>
         <span class="card blank"></span>
@@ -99,7 +104,9 @@
         document.getElementById("cosmosArt").addEventListener("click", (e) => {
             Gallery.getInst().openArt(new CosmosArt(0, 0, 0, {}));
         })
-        
+        document.getElementById("buttonArt").addEventListener("click", (e) => {
+            Gallery.getInst().openArt(new ButtonArt(220, 220, 220, {}));
+        })
     </script>
 </body>
 </html>

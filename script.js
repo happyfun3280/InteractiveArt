@@ -75,6 +75,9 @@ class Art {
         this.pressed = false;
         this.held = false;
         this.released = false;
+
+        this.canvasWidth = Gallery.getInst().canvasWidth;
+        this.canvasHeight = Gallery.getInst().canvasHeight;
     }
 
     getDeltaTime() { return this.deltaTime; }
@@ -100,6 +103,8 @@ class Art {
     }
     windowResized(p) {
         p.background(this.bgc.r, this.bgc.g, this.bgc.b);
+        this.canvasWidth = Gallery.getInst().canvasWidth;
+        this.canvasHeight = Gallery.getInst().canvasHeight;
     }
 }
 
