@@ -12,9 +12,9 @@ class ButtonArt extends Art {
         this.ROW_GAP = 50;
         this.COLUMN_GAP = 20;
 
-        this.BTN_LENGTH = 50;
+        this.BTN_LENGTH = 200;
 
-        this.BTN_PUSHED_LENGTH = 30;
+        this.BTN_PUSHED_LENGTH = 100;
         this.BTN_MOVE_DIST = 1;
 
         let curX = 0;
@@ -139,9 +139,9 @@ class ButtonArt extends Art {
                 // 2: raise
                 // 3: end
                 sceneList: [
-                    { t: 0, tlimit: 1000 },
+                    { t: 0, tlimit: 2000 },
                     { t: 0, tlimit: 500 },
-                    { t: 0, tlimit: 1000 }
+                    { t: 0, tlimit: 2000 }
                 ]
             });
         }

@@ -22,7 +22,7 @@ body {
                             "ball ball umbr"
                             "rect circ mirr"
                             "butt cosm cosm"
-                            ".    cosm cosm"
+                            "aimi cosm cosm"
                             ".    .    .   ";
     }
 }
@@ -34,7 +34,7 @@ body {
         grid-template-areas:"ball ball rect umbr" 
                             "ball ball circ umbr"
                             "butt mirr cosm cosm"
-                            ".    .    cosm cosm"
+                            "aimi .    cosm cosm"
                             ".    .    .    .   "
                             ".    .    .    .   ";
     }
@@ -45,7 +45,7 @@ body {
         grid-template-columns: 19vw 19vw 19vw 19vw 19vw;
         grid-auto-rows: 19vw;
         grid-template-areas:"ball ball butt umbr rect" 
-                            "ball ball circ umbr .   "
+                            "ball ball circ umbr aimi"
                             ".    mirr cosm cosm .   "
                             ".    .    cosm cosm .   "
                             ".    .    .    .    .   "
@@ -57,12 +57,12 @@ body {
     #container {
         grid-template-columns: 16vw 16vw 16vw 16vw 16vw 16vw;
         grid-auto-rows: 16vw;
-        grid-template-areas:"ball ball butt umbr rect ." 
-                            "ball ball circ umbr .    ."
-                            ".    mirr cosm cosm .    ."
-                            ".    .    cosm cosm .    ."
-                            ".    .    .    .    .    ."
-                            ".    .    .    .    .    .";
+        grid-template-areas:"ball ball butt umbr rect aimi" 
+                            "ball ball circ umbr .    .   "
+                            ".    mirr cosm cosm .    .   "
+                            ".    .    cosm cosm .    .   "
+                            ".    .    .    .    .    .   "
+                            ".    .    .    .    .    .   ";
     }
 }
 
@@ -131,6 +131,7 @@ body {
 #mirrorArt { grid-area: mirr; }
 #cosmosArt { grid-area: cosm; }
 #buttonArt { grid-area: butt; }
+#aimingArt { grid-area: aimi; }
 
 #p5Container {
     overflow: hidden;

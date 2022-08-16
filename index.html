@@ -14,6 +14,7 @@
     <script src="./arts/mirrorArt.js"></script>
     <script src="./arts/cosmosArt.js"></script>
     <script src="./arts/buttonArt.js"></script>
+    <script src="./arts/aimingArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -47,6 +48,10 @@
         <span id="buttonArt" class="card">
             <img src="./imgs/buttonArt.png" alt="">
             <span class="title">Chan Hee</span>
+        </span>
+        <span id="aimingArt" class="card">
+            <img src="./imgs/aimingArt.png" alt="">
+            <span class="title dark">Sol Chan</span>
         </span>
         <span class="card blank"></span>
         <span class="card blank"></span>
@@ -106,6 +111,9 @@
         })
         document.getElementById("buttonArt").addEventListener("click", (e) => {
             Gallery.getInst().openArt(new ButtonArt(220, 220, 220, {}));
+        })
+        document.getElementById("aimingArt").addEventListener("click", (e) => {
+            Gallery.getInst().openArt(new AimingArt(255, 255, 255, {}));
         })
     </script>
 </body>
