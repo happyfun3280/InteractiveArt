@@ -18,12 +18,10 @@ class BalloonArt extends Art {
         touchObj.g = 0;
         touchObj.b = 0;
         touchObj.circleSize = 80;
-        console.log(1);
     }
 
     updateTouch(touchObj) {
         let p = this.p;
-        console.log(touchObj);
         if(touchObj.x<this.canvasWidth/2 && touchObj.y<this.canvasHeight/2){
             touchObj.r = 255;
             touchObj.g = 200;

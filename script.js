@@ -140,13 +140,14 @@ class Art {
                     x: event.changedTouches[i].clientX,
                     y: event.changedTouches[i].clientY 
                 });
-                this.initTouch(this.touchObjList[i]);
+                this.initTouch(this.touchObjList[this.touchObjList.length-1]);
             }
         }
         return false;
     }
 
     touchMoved(event) {
+        console.log(event);
         if (event.changedTouches == undefined) {
             this.touchObjList[0].x = event.clientX;
             this.touchObjList[0].y = event.clientY;
