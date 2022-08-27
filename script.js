@@ -25,6 +25,7 @@ class Gallery {
     create() {
         if (this.p !== undefined) this.p.remove();
         this.mainContainer.classList.add("hidden");
+
         this.p = new p5((p) => {
             p.setup = () => {
                 p.createCanvas(this.canvasWidth, this.canvasHeight);
@@ -50,16 +51,33 @@ class Gallery {
                 infoBtn.mousePressed(() => {
                 });
 
-                this.art.setup(p);
-            };
+                this.art.p = p;
+                this.art.canvasWidth = this.canvasWidth;
+                this.art.canvasHeight = this.canvasHeight;
+
+                this.art.setup();
+            }
+
             p.draw = () => {
-                this.art.draw(p);
-            };
-            p.windowResized = () => {
-                this.canvasWidth = innerWidth;
-                this.canvasHeight = innerHeight;
-                p.resizeCanvas(this.canvasWidth, this.canvasHeight);
-                this.art.windowResized(p);
+                if (this.canvasWidth != innerWidth || this.canvasHeight != innerHeight) {
+                    this.art.canvasWidth = this.canvasWidth = innerWidth;
+                    this.art.canvasHeight = this.canvasHeight = innerHeight;
+
+                    p.resizeCanvas(this.canvasWidth, this.canvasHeight);
+                }
+                this.art.draw();
+            }
+
+            p.touchStarted = (event) => {
+                this.art.touchStarted(event);
+            }
+
+            p.touchMoved = (event) => {
+                this.art.touchMoved(event);
+            }
+
+            p.touchEnded = (event) => {
+                this.art.touchEnded(event);
             }
         }, this.p5Container);
     }
@@ -76,17 +94,20 @@ class Art {
         this.held = false;
         this.released = false;
 
-        this.canvasWidth = Gallery.getInst().canvasWidth;
-        this.canvasHeight = Gallery.getInst().canvasHeight;
+        this.canvasWidth = 100;
+        this.canvasHeight = 100;
+
+        this.touchObjList = [];
     }
 
     getDeltaTime() { return this.deltaTime; }
 
-    setup(p) {
-        p.background(this.bgc.r, this.bgc.g, this.bgc.b);
+    setup() {
     }
 
-    draw(p) {
+    draw() {
+        let p = this.p;
+
         this.eTime = new Date().getTime();
         this.deltaTime = this.eTime - this.sTime;
         this.sTime = new Date().getTime();
@@ -100,11 +121,76 @@ class Art {
             else this.released = false;
             this.held = false;
         }
+
+        this.update();
     }
-    windowResized(p) {
-        p.background(this.bgc.r, this.bgc.g, this.bgc.b);
-        this.canvasWidth = Gallery.getInst().canvasWidth;
-        this.canvasHeight = Gallery.getInst().canvasHeight;
+
+    touchStarted(event) {
+        if (event.changedTouches == undefined) {
+            this.touchObjList.splice(0, 0, {
+                id: -1,
+                x: event.clientX,
+                y: event.clientY 
+            })
+            this.initTouch(this.touchObjList[0]);
+        } else {
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                this.touchObjList.push({
+                    id: event.changedTouches[i].identifier,
+                    x: event.changedTouches[i].clientX,
+                    y: event.changedTouches[i].clientY 
+                });
+                this.initTouch(this.touchObjList[i]);
+            }
+        }
+        return false;
+    }
+
+    touchMoved(event) {
+        if (event.changedTouches == undefined) {
+            this.touchObjList[0].x = event.clientX;
+            this.touchObjList[0].y = event.clientY;
+        } else {
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                for (let j = 0; j < this.touchObjList.length; j++) {
+                    if (event.changedTouches[i].identifier == this.touchObjList[j].id) {
+                        this.touchObjList[j].x = event.changedTouches[i].clientX;
+                        this.touchObjList[j].y = event.changedTouches[i].clientY;
+                        break;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    touchEnded(event) {
+        if (event.changedTouches == undefined) {
+            this.touchObjList.splice(0, 1);
+        } else {
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                for (let j = 0; j < this.touchObjList.length; j++) {
+                    if (event.changedTouches[i].identifier == this.touchObjList[j].id) {
+                        this.touchObjList.splice(j, 1);
+                        break;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    update() {
+        for (let i = 0; i < this.touchObjList.length; i++) {
+            this.updateTouch(this.touchObjList[i]);
+        }
+    }
+
+    initTouch(touchObject) {
+    }
+
+    updateTouch(touchObject) {
+
     }
 }
 
@@ -113,7 +199,7 @@ class Timer {
         this.count = 0;
         this.limit = limit;
     }
-    
+
     timeover(delta) {
         this.count += delta;
         if (this.count < this.limit) return false;
