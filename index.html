@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,9 +18,10 @@
     <script src="./arts/aimingArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
-<body oncontextmenu='return false' onselectstart='return false' ondragstart='return false'>
+
+<body>
     <div id="p5Container"></div>
-    
+
     <div id="container">
         <span id="balloonArt" class="card">
             <img src="./imgs/balloonArt.png" alt="">
@@ -87,6 +89,23 @@
         <span class="card blank"></span>
     </div>
     <script>
+
+        document.body.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        document.body.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+        document.body.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+
+        document.body.addEventListener('touchstart', function (e) {
+            if ((e.touches.length > 1) || e.targetTouches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
         const p5Container = document.getElementById("p5Container");
         const mainContainer = document.getElementById("container");
         Gallery.getInst().setContainers(p5Container, mainContainer);
@@ -117,4 +136,5 @@
         })
     </script>
 </body>
+
 </html>

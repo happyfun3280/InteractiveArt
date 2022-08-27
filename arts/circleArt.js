@@ -2,67 +2,79 @@ class CircleArt extends Art {
     constructor(red, green, blue, settings) {
         super(red, green, blue);
 
-        this.ellipseList = [];
+        this.circleList = [];
 
-        if (settings === undefined) {
-            this.maxSize = 100;
-            this.blueTimer = new Timer(30);
-            this.redTimer = new Timer(50);
-        } else {
-            this.maxSize = (settings.maxSize === undefined) ? 100 : settings.maxSize;
-            this.blueTimer = new Timer((settings.blueTime === undefined) ? 30 : settings.blueTime);
-            this.redTimer = new Timer((settings.redTime === undefined) ? 50 : settings.redTime);
-        }
+        this.timer = new Timer(30);
+        this.MAX_SIZE = 100;
     }
-
-    getEllipses() { return this.ellipseList; }
 
     setup(p) {
-        super.setup(p);
-        p.noStroke();
+        this.p.noStroke();
     }
 
-    draw(p) {
-        super.draw(p);
-        if (this.blueTimer.timeover(this.getDeltaTime())) {
-            this.getEllipses().push({
-                x: Math.floor(Math.random() * Gallery.getInst().canvasWidth),
-                y: Math.floor(Math.random() * Gallery.getInst().canvasHeight),
-                w: 0,
-                h: 0,
-                red: 0,
-                green: 0,
-                blue: Math.floor(Math.random() * 256)
+    update() {
+        super.update();
+
+        let p = this.p;
+
+        if (this.timer.timeover(this.getDeltaTime())) {
+            this.circleList.push({
+                x: p.random(0, this.canvasWidth),
+                y: p.random(0, this.canvasHeight),
+                size: 0,
+                r: 0,
+                g: 0,
+                b: p.random(0, 256)
             });
         }
 
-        if (p.mouseIsPressed) {
-            if (this.redTimer.timeover(this.getDeltaTime())) {
-                this.getEllipses().push({
-                    x: p.mouseX,
-                    y: p.mouseY,
-                    w: 0,
-                    h: 0,
-                    red: Math.floor(Math.random() * 256),
-                    green: 0,
-                    blue: 0
-                });
-            }
-        }
+        for (let i = 0; i < this.circleList.length; i++) {
+            let circle = this.circleList[i];
 
-        let maxSize = Gallery.getInst().canvasWidth / 8;
-        for (let i = 0; i < this.getEllipses().length; i++) {
-            let e = this.getEllipses()[i];
-
-            p.fill(e.red, e.green, e.blue);
-            p.ellipse(e.x, e.y, e.w, e.h);
-            e.w++;
-            e.h++;
-            if (e.w > maxSize) {
-                this.getEllipses().splice(i, 1);
+            p.fill(circle.r, circle.g, circle.b);
+            p.ellipse(circle.x, circle.y, circle.size);
+            circle.size++;
+            if (circle.size > this.MAX_SIZE) {
+                this.circleList.splice(i, 1);
                 i--;
                 continue;
             }
+        }
+    }
+
+    
+    initTouch(touch) {
+        touch.timer = new Timer(100);
+        switch (touch.id%3) {
+        case 0:
+            touch.g = 0;
+            touch.b = 0;
+            break;
+        case 1:
+            touch.g = 100;
+            touch.b = 0;
+            break;
+        case 2:
+            touch.g = 0;
+            touch.b = 100;
+            break;
+        default:
+            touch.g = 0;
+            touch.b = 0;
+            break;
+        }
+    }
+
+    updateTouch(touch) {
+        if (touch.timer.timeover(this.getDeltaTime())) {
+            this.circleList.push({
+                x: touch.x,
+                y: touch.y,
+                size: 0,
+                r: this.p.random(0, 256),
+                g: touch.g,
+                b: touch.b
+            });
         }
     }
 }

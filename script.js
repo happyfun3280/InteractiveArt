@@ -55,6 +55,7 @@ class Gallery {
                 this.art.canvasWidth = this.canvasWidth;
                 this.art.canvasHeight = this.canvasHeight;
 
+                p.background(this.art.bgc.r, this.art.bgc.g, this.art.bgc.b);
                 this.art.setup();
             }
 
@@ -64,6 +65,7 @@ class Gallery {
                     this.art.canvasHeight = this.canvasHeight = innerHeight;
 
                     p.resizeCanvas(this.canvasWidth, this.canvasHeight);
+                    p.background(this.art.bgc.r, this.art.bgc.g, this.art.bgc.b);
                 }
                 this.art.draw();
             }
@@ -147,9 +149,8 @@ class Art {
     }
 
     touchMoved(event) {
-        console.log(event);
         if (event.changedTouches == undefined) {
-            this.touchObjList[0].x = event.clientX;
+            this.touchObjList[0].x = event.clientX; 
             this.touchObjList[0].y = event.clientY;
         } else {
             for (let i = 0; i < event.changedTouches.length; i++) {
@@ -187,11 +188,10 @@ class Art {
         }
     }
 
-    initTouch(touchObject) {
+    initTouch(touchObject, index) {
     }
 
-    updateTouch(touchObject) {
-
+    updateTouch(touchObject, index) {
     }
 }
 
