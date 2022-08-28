@@ -30,30 +30,64 @@ class Gallery {
             p.setup = () => {
                 p.createCanvas(this.canvasWidth, this.canvasHeight);
 
-                let backBtn = p.createButton("Back");
-                backBtn.position(20, 20);
-                backBtn.addClass('topBtn back');
-                backBtn.mousePressed(() => {
+                let exitBtn = p.createButton("Exit");
+                exitBtn.position(20, 20);
+                exitBtn.addClass('topBtn');
+                exitBtn.mousePressed(() => {
                     p.remove();
                     p = undefined;
                     this.mainContainer.classList.remove("hidden");
                 });
 
+                this.art.p = p;
+                this.art.canvasWidth = this.canvasWidth;
+                this.art.canvasHeight = this.canvasHeight;
+
+
+                let settingBG = p.createDiv("");
+                settingBG.position(0, 0);
+                settingBG.addClass('leftBox hidden');
+                let backBtn = p.createButton("Back");
+                backBtn.position(20, 20);
+                backBtn.addClass('topBtn hidden');
+                backBtn.mousePressed(() => {
+                    settingBG.addClass('hidden');
+                    backBtn.addClass('hidden');
+                    for (let i = 0; i < this.art.settingList.length; i++)
+                        this.art.settingList[i].addClass('hidden');
+                    for (let i = 0; i < this.art.infoList.length; i++)
+                        this.art.infoList[i].addClass('hidden');
+                });
+
                 let settingBtn = p.createButton("Settings");
                 settingBtn.position(90, 20);
-                settingBtn.addClass('topBtn setting');
+                settingBtn.addClass('topBtn settingBtn');
                 settingBtn.mousePressed(() => {
+                    settingBG.removeClass('hidden');
+                    backBtn.removeClass('hidden');
+                    for (let i = 0; i < this.art.settingList.length; i++)
+                        this.art.settingList[i].removeClass('hidden');
+                    for (let i = 0; i < this.art.infoList.length; i++)
+                        this.art.infoList[i].addClass('hidden');
                 });
 
                 let infoBtn = p.createButton("Info");
                 infoBtn.position(185, 20);
-                infoBtn.addClass('topBtn info');
+                infoBtn.addClass('topBtn infoBtn');
                 infoBtn.mousePressed(() => {
+                    settingBG.removeClass('hidden');
+                    backBtn.removeClass('hidden');
+                    for (let i = 0; i < this.art.settingList.length; i++)
+                        this.art.settingList[i].addClass('hidden');
+                    for (let i = 0; i < this.art.infoList.length; i++)
+                        this.art.infoList[i].removeClass('hidden');
                 });
 
-                this.art.p = p;
-                this.art.canvasWidth = this.canvasWidth;
-                this.art.canvasHeight = this.canvasHeight;
+                this.art.form();
+                for (let i = 0; i < this.art.settingList.length; i++)
+                    this.art.settingList[i].addClass('setting hidden');
+                for (let i = 0; i < this.art.infoList.length; i++)
+                    this.art.infoList[i].addClass('info hidden');
 
                 p.background(this.art.bgc.r, this.art.bgc.g, this.art.bgc.b);
                 this.art.setup();
@@ -100,12 +134,30 @@ class Art {
         this.canvasHeight = 100;
 
         this.touchObjList = [];
+
+        this.settingList = [];
+        this.settingY = 90;
+        this.infoList = [];
+        this.infoY = 90;
     }
 
     getDeltaTime() { return this.deltaTime; }
 
-    setup() {
+    form() { }
+    pushSetting(element, interval, classList) {
+        element.addClass(classList);
+        element.position(20, this.settingY);
+        this.settingY += interval;
+        this.settingList.push(element);
     }
+    pushInfo(element, interval, classList) {
+        element.addClass(classList);
+        element.position(20, this.infoY);
+        this.infoY += interval;
+        this.infoList.push(element);
+    }
+
+    setup() { }
 
     draw() {
         let p = this.p;
@@ -132,7 +184,7 @@ class Art {
             this.touchObjList.splice(0, 0, {
                 id: -1,
                 x: event.clientX,
-                y: event.clientY 
+                y: event.clientY
             })
             this.initTouch(this.touchObjList[0]);
         } else {
@@ -140,9 +192,9 @@ class Art {
                 this.touchObjList.push({
                     id: event.changedTouches[i].identifier,
                     x: event.changedTouches[i].clientX,
-                    y: event.changedTouches[i].clientY 
+                    y: event.changedTouches[i].clientY
                 });
-                this.initTouch(this.touchObjList[this.touchObjList.length-1]);
+                this.initTouch(this.touchObjList[this.touchObjList.length - 1]);
             }
         }
         return false;
@@ -150,7 +202,7 @@ class Art {
 
     touchMoved(event) {
         if (event.changedTouches == undefined) {
-            this.touchObjList[0].x = event.clientX; 
+            this.touchObjList[0].x = event.clientX;
             this.touchObjList[0].y = event.clientY;
         } else {
             for (let i = 0; i < event.changedTouches.length; i++) {
@@ -188,11 +240,9 @@ class Art {
         }
     }
 
-    initTouch(touchObject, index) {
-    }
+    initTouch(touchObject) { }
 
-    updateTouch(touchObject, index) {
-    }
+    updateTouch(touchObject) { }
 }
 
 class Timer {

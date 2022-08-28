@@ -1,7 +1,20 @@
 class BalloonArt extends Art {
     constructor(red, green, blue) {
         super(red, green, blue);
-        this.CHANGE_LEVEL = 8;
+    }
+
+    form() {
+        // setting
+        this.pushSetting(this.p.createDiv("Interval : "), 30);
+        this.intervalSlider = this.p.createSlider(50, 500, 100);
+        this.pushSetting(this.intervalSlider, 40);
+        this.pushSetting(this.p.createDiv("Color Interval : "), 30);
+        this.colorIntervalSlider = this.p.createSlider(1, 20, 8);
+        this.pushSetting(this.colorIntervalSlider, 40);
+
+        //info
+        this.pushInfo(this.p.createDiv("Balloon Art"), 30, 'title');
+        this.pushInfo(this.p.createDiv("Made by Solchan"), 30, 'body');
     }
 
     setup() {
@@ -40,10 +53,18 @@ class BalloonArt extends Art {
             touchObj.b = 255;
         }
 
+
         touchObj.circleSize += 2;
-        for(let repeat_check = 0; repeat_check <= (touchObj.circleSize/100) + 1; repeat_check++){
-            p.fill(touchObj.r - (this.CHANGE_LEVEL*repeat_check), touchObj.g - (this.CHANGE_LEVEL*repeat_check), touchObj.b - (this.CHANGE_LEVEL*repeat_check));
-            p.ellipse(touchObj.x, touchObj.y, touchObj.circleSize - (100 * repeat_check), touchObj.circleSize - (100 * repeat_check));
+        for(let repeat_check = 0; repeat_check <= (touchObj.circleSize/this.intervalSlider.value()) + 1; repeat_check++){
+            p.fill(
+                touchObj.r - (this.colorIntervalSlider.value()*repeat_check), 
+                touchObj.g - (this.colorIntervalSlider.value()*repeat_check),
+                touchObj.b - (this.colorIntervalSlider.value()*repeat_check)
+            );
+            p.ellipse(touchObj.x, touchObj.y, 
+                touchObj.circleSize - (this.intervalSlider.value() * repeat_check), 
+                touchObj.circleSize - (this.intervalSlider.value() * repeat_check)
+            );
         }
     }
 }
