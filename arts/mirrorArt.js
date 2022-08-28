@@ -1,51 +1,50 @@
 class MirrorArt extends Art {
     constructor(red, green, blue) {
         super(red, green, blue);
-
-        this.color = 0;
-        this.dir = 0;
-        this.MIN = 100;
-        this.MAX = 255;
-        
-        this.SIZE_MIN = 10;
-        this.SIZE_MAX = 50;
-        this.size = this.SIZE_MIN;
-        
-
     }
 
-    setup(p) {
-        super.setup(p);
-        p.noStroke();
-        this.color = p.random(this.MIN, this.MAX);
+    form() {
+        // setting
+        this.pushSetting(this.p.createDiv("Min Size : "), 30);
+        this.minSizeSlider = this.p.createSlider(1, 50, 10);
+        this.pushSetting(this.minSizeSlider, 40);
+        this.pushSetting(this.p.createDiv("Max Size : "), 30);
+        this.maxSizeSlider = this.p.createSlider(50, 100, 50);
+        this.pushSetting(this.maxSizeSlider, 40);
+
+        this.pushSetting(this.p.createDiv("Brightness : "), 30);
+        this.brightnessSlider = this.p.createSlider(0, 255, 100);
+        this.pushSetting(this.brightnessSlider, 40);
     }
 
-    draw(p) {
-        super.draw(p);
-        if (this.held) {
-            if (this.dir === 0) this.color++;
-            else this.color--;
+    setup() {
+        this.p.noStroke();
+    }
 
-            if (this.color >= this.MAX) this.dir = 1;
-            if (this.color <= this.MIN) this.dir = 0;
+    update() {
+        super.update();
+    }
 
-            const SCRX = Gallery.getInst().canvasWidth;
-            const SCRY = Gallery.getInst().canvasHeight;
+    initTouch(touch) {
+        touch.size = this.minSizeSlider.value();
+        touch.color = this.brightnessSlider.value();
+    }
 
-            p.fill(this.color, 0, this.color);
-            p.circle(p.mouseX, p.mouseY, this.size, this.size);
-            p.fill(this.color, this.color, 0);
-            p.circle(SCRX - p.mouseX, SCRY - p.mouseY, this.size, this.size);
-            p.fill(0, this.color, this.color);
-            p.circle(SCRX - p.mouseX, p.mouseY, this.size, this.size);
-            p.fill(0, 0, this.color);
-            p.circle(p.mouseX, SCRY - p.mouseY, this.size, this.size);
-            this.size += 0.5;
-            if (this.size > this.SIZE_MAX) this.size = this.SIZE_MAX;
-        }
+    updateTouch(touch) {
+        let p = this.p;
+        p.fill(touch.color, 0, 0);
+        p.circle(touch.x, touch.y, touch.size, touch.size);
+        p.fill(0, touch.color, 0);
+        p.circle(this.canvasWidth - touch.x, this.canvasHeight - touch.y, touch.size, touch.size);
+        p.fill(0, 0, touch.color);
+        p.circle(this.canvasWidth - touch.x, touch.y, touch.size, touch.size);
+        p.fill(touch.color, 0, touch.color);
+        p.circle(touch.x, this.canvasHeight - touch.y, touch.size, touch.size);
 
-        if (this.released) {
-            this.size = this.SIZE_MIN;
-        }
+        touch.color += 1;
+        if (touch.color > 255) touch.color = 255;
+
+        touch.size += 0.5;
+        if (touch.size > this.maxSizeSlider.value()) touch.size = this.maxSizeSlider.value();
     }
 }

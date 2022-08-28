@@ -26,44 +26,44 @@ class BalloonArt extends Art {
         super.update();
     }
 
-    initTouch(touchObj) {
-        touchObj.r = 0;
-        touchObj.g = 0;
-        touchObj.b = 0;
-        touchObj.circleSize = 80;
+    initTouch(touch) {
+        touch.r = 0;
+        touch.g = 0;
+        touch.b = 0;
+        touch.circleSize = 80;
     }
 
-    updateTouch(touchObj) {
+    updateTouch(touch) {
         let p = this.p;
-        if(touchObj.x<this.canvasWidth/2 && touchObj.y<this.canvasHeight/2){
-            touchObj.r = 255;
-            touchObj.g = 200;
-            touchObj.b = 200;
-        }else if(touchObj.x>=this.canvasWidth/2 && touchObj.y<this.canvasHeight/2){
-            touchObj.r = 0;
-            touchObj.g = 200;
-            touchObj.b = 255;
-        }else if(touchObj.x<this.canvasWidth/2 && touchObj.y>=this.canvasHeight/2){
-            touchObj.r = 200;
-            touchObj.g = 255;
-            touchObj.b = 100;
+        if(touch.x<this.canvasWidth/2 && touch.y<this.canvasHeight/2){
+            touch.r = 255;
+            touch.g = 200;
+            touch.b = 200;
+        }else if(touch.x>=this.canvasWidth/2 && touch.y<this.canvasHeight/2){
+            touch.r = 0;
+            touch.g = 200;
+            touch.b = 255;
+        }else if(touch.x<this.canvasWidth/2 && touch.y>=this.canvasHeight/2){
+            touch.r = 200;
+            touch.g = 255;
+            touch.b = 100;
         }else{
-            touchObj.r = 150;
-            touchObj.g = 80;
-            touchObj.b = 255;
+            touch.r = 150;
+            touch.g = 80;
+            touch.b = 255;
         }
 
 
-        touchObj.circleSize += 2;
-        for(let repeat_check = 0; repeat_check <= (touchObj.circleSize/this.intervalSlider.value()) + 1; repeat_check++){
+        touch.circleSize += 2;
+        for(let repeat_check = 0; repeat_check <= (touch.circleSize/this.intervalSlider.value()) + 1; repeat_check++){
             p.fill(
-                touchObj.r - (this.colorIntervalSlider.value()*repeat_check), 
-                touchObj.g - (this.colorIntervalSlider.value()*repeat_check),
-                touchObj.b - (this.colorIntervalSlider.value()*repeat_check)
+                touch.r - (this.colorIntervalSlider.value()*repeat_check), 
+                touch.g - (this.colorIntervalSlider.value()*repeat_check),
+                touch.b - (this.colorIntervalSlider.value()*repeat_check)
             );
-            p.ellipse(touchObj.x, touchObj.y, 
-                touchObj.circleSize - (this.intervalSlider.value() * repeat_check), 
-                touchObj.circleSize - (this.intervalSlider.value() * repeat_check)
+            p.ellipse(touch.x, touch.y, 
+                touch.circleSize - (this.intervalSlider.value() * repeat_check), 
+                touch.circleSize - (this.intervalSlider.value() * repeat_check)
             );
         }
     }

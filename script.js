@@ -97,9 +97,10 @@ class Gallery {
                 if (this.canvasWidth != innerWidth || this.canvasHeight != innerHeight) {
                     this.art.canvasWidth = this.canvasWidth = innerWidth;
                     this.art.canvasHeight = this.canvasHeight = innerHeight;
-
+                    
                     p.resizeCanvas(this.canvasWidth, this.canvasHeight);
                     p.background(this.art.bgc.r, this.art.bgc.g, this.art.bgc.b);
+                    this.art.setup();
                 }
                 this.art.draw();
             }
