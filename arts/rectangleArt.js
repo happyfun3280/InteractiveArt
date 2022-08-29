@@ -1,6 +1,7 @@
 class RectangleArt extends Art {
-    constructor(red, green, blue, settings) {
-        super(red, green, blue);
+    constructor() {
+        super();
+        this.backColor = { r: 255, g: 255, b: 255 };
     }
     
     form() {

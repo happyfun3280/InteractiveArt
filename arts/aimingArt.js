@@ -1,37 +1,43 @@
 class AimingArt extends Art {
-    constructor(red, green, blue) {
-        super(red, green, blue);
-        this.randX = Gallery.getInst().canvasWidth / 2;
-        this.randY = Gallery.getInst().canvasHeight / 2;
+    constructor() {
+        super();
+        this.backColor = { r: 255, g: 255, b: 255 };
     }
 
-    setup(p) {
-        super.setup(p);
-        p.noStroke();
-        p.fill(0, 255, 100);
-        if (p.mouseIsPressed && this.distance(p) <= 30) {
-            this.randX = p.random(0, Gallery.getInst().canvasWidth);
-            this.randY = p.random(0, Gallery.getInst().canvasHeight);
-        }
+    setup() {
+        this.randX = this.canvasWidth / 2;
+        this.randY = this.canvasHeight / 2;
+
+        this.p.noStroke();
+        this.p.fill(0, 255, 100);
     }
     
-    draw(p) {
-        super.draw(p);
+    update() {
+        super.update();
+        this.p.ellipse(this.randX, this.randY, 60, 60);
+    }
 
-        p.ellipse(this.randX, this.randY, 60, 60);
-        if (p.mouseIsPressed && this.distance(p) <= 40) {
+    initTouch() {
+
+    }
+
+    updateTouch(touch) {
+        let p = this.p;
+
+        if (this.distance(touch.x, touch.y) <= 40) {
             p.fill(0, 255, 255);
-            p.rect(0, 0, Gallery.getInst().canvasWidth, Gallery.getInst().canvasHeight);
-            this.randX = p.random(0, Gallery.getInst().canvasWidth);
-            this.randY = p.random(0, Gallery.getInst().canvasHeight);
+            p.rect(0, 0, this.canvasWidth, this.canvasHeight);
+            this.randX = p.random(0, this.canvasWidth);
+            this.randY = p.random(0, this.canvasHeight);
             p.fill(255, 150, 100);
             p.ellipse(this.randX, this.randY, 80, 80);
             p.fill(0, 255, 100);
             p.ellipse(this.randX, this.randY, 50, 50);
         }
+
     }
 
-    distance(p) {
-        return Math.sqrt((this.randX-p.mouseX)*(this.randX-p.mouseX) + (this.randY-p.mouseY)*(this.randY-p.mouseY));
+    distance(x, y) {
+        return Math.sqrt((this.randX-x)*(this.randX-x) + (this.randY-y)*(this.randY-y));
     }
 }

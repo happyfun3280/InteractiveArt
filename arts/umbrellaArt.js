@@ -1,259 +1,259 @@
 class UmbrellaArt extends Art {
-    constructor(red, green, blue, settings) {
-        super(red, green, blue);
-        this.raindropList = [];
-        this.wetList = [];
-        this.disappearTime = 2000;
-        if (settings === undefined) {
-            this.rdLen = 20;
-            this.rdWeight = 5;
-            this.rdCreateTimer = new Timer(100);
-            this.collisionAreaVisible = false;
+    constructor() {
+        super();
+        this.backColor = { r: 188, g: 200, b: 209 };
+    }
+
+    form() {
+        this.pushSetting(this.p.createDiv("Raindrop Number : "), 30);
+        this.raindropNumberSlider = this.p.createSlider(1, 200, 100);
+        this.pushSetting(this.raindropNumberSlider, 40);
+
+        this.pushSetting(this.p.createDiv("Color : "), 30);
+        this.colorSlider = this.p.createSlider(0, 255, 100);
+        this.pushSetting(this.colorSlider, 40);
+
+        this.pushSetting(this.p.createDiv("Bold : "), 30);
+        this.boldSlider = this.p.createSlider(1, 10, 3);
+        this.pushSetting(this.boldSlider, 40);
+       
+        this.pushSetting(this.p.createDiv("Length : "), 30);
+        this.lengthSlider = this.p.createSlider(5, 20, 10);
+        this.pushSetting(this.lengthSlider, 40);
+
+        this.pushSetting(this.p.createDiv("Speed : "), 30);
+        this.speedSlider = this.p.createSlider(5, 20, 5);
+        this.pushSetting(this.speedSlider, 40);
+    }
+
+    setup() {
+        this.width = this.canvasWidth / 5;
+        this.height = this.width/3;
+        this.stickLength = this.width / 3;
+
+        this.wind = 1;
+        this.changeWind = 1;
+        this.windTimer = new Timer(100);
+
+        this.raindrops = [];
+        this.initRaindrops();
+
+        this.groundHeight = 50;
+
+        this.wettings = [];
+
+        this.buildings = [];
+        this.initBuildings();
+    }
+
+    update() {
+        this.p.background(this.backColor.r, this.backColor.g, this.backColor.b);
+        this.renderBuildings();
+        super.update();
+
+
+        this.createRaindrops();
+        this.updateRaindrops();
+        this.colideRaindrops();
+        this.renderRaindrops();
+
+        this.p.noStroke();
+        this.p.fill(100, 70, 40);
+        this.p.rect(0, this.canvasHeight - this.groundHeight, this.canvasWidth, this.canvasHeight);
+
+        this.updateWettings();
+        this.renderWettings();
+
+        if (this.wind < this.changeWind) {
+            this.wind += 0.1;
         } else {
-            this.rdLen = (settings.rdLen === undefined) ? 20 : settings.rdLen;
-            this.rdWeight = (settings.rdWeight === undefined) ? 5 : settings.rdWeight;
-            this.rdCreateTimer = new Timer((settings.rdTime === undefined) ? 100 : settings.rdTime);
-            this.collisionAreaVisible = (settings.visible === undefined) ? false : settings.visible;
+            this.wind -= 0.1;
         }
-        this.CREATE_LIMIT = 100;
 
-        this.ground = Gallery.getInst().canvasHeight / 20;
-        this.x = Gallery.getInst().canvasWidth / 2;
-        this.y = Gallery.getInst().canvasHeight / 2;
-        this.width = Gallery.getInst().canvasWidth / 4;
-        this.height = this.width / 4;
+        if (this.windTimer.timeover(this.getDeltaTime())) {
+            this.windTimer = new Timer(this.p.random(0, 5000));
+            this.changeWind = this.p.random(-5, 5);
+        }
 
-        this.circles = [];
-        this.initCollisionArea(10);
     }
 
-    initCollisionArea(uniform) {
-        this.circles.push({
-            x: this.x,
-            y: this.y,
-            r: this.height / 2
-        })
-        let gapX = this.width / 2 / uniform;
-        let gapY = this.height / 2 / (uniform + 2);
+    initTouch(touch) {
+        touch.prevX = touch.x;
+        touch.prevY = touch.y;
+    }
 
-        for (let i = 0; i < uniform; i++) {
-            this.circles.push({
-                x: this.x - gapX * (i + 1),
-                y: this.y + gapY * (i + 1),
-                r: this.height / 2 - gapY * (i + 1)
+    updateTouch(touch) {
+        this.renderUmbrella(touch.x, touch.y);
+        // this.renderColideRange(touch.x, touch.y);
+
+        for (let i = 0; i < this.raindrops.length; i++) {
+            let raindrop = this.raindrops[i];
+
+            if (raindrop.y > touch.y - this.stickLength) continue;
+            
+            let distance = Math.sqrt(Math.pow(raindrop.x - touch.x, 2) + Math.pow(raindrop.y - (touch.y - this.stickLength + this.stickLength/2), 2));
+            if (distance < this.width/2) {
+                this.raindrops.splice(i, 1);
+                i--;
+                continue;
+            }
+        }
+    }
+
+    initRaindrops() {
+        for (let i = this.raindrops.length-1; i < this.raindropNumberSlider.value(); i++) {
+            this.raindrops.push({
+                x: this.p.random(0, this.canvasWidth),
+                y: this.p.random(0, this.canvasHeight),
+                vx: 0,
+                vy: this.p.random(this.speedSlider.value(), 10 + this.speedSlider.value())
             });
-            this.circles.push({
-                x: this.x + gapX * (i + 1),
-                y: this.y + gapY * (i + 1),
-                r: this.height / 2 - gapY * (i + 1)
+        }
+    }
+
+    createRaindrops() {
+        for (let i = this.raindrops.length-1; i < this.raindropNumberSlider.value(); i++) {
+            this.raindrops.push({
+                x: this.p.random(-Math.abs(this.changeWind*100), this.canvasWidth+Math.abs(this.changeWind*100)),
+                y: 0,
+                vx: 0,
+                vy: this.p.random(this.speedSlider.value(), 10 + this.speedSlider.value())
             });
         }
     }
 
-    moveUmbrella(movedX, movedY) {
-        let deltaX = movedX - this.x;
-        let deltaY = movedY - this.y - this.height * 2;
-        for (let i = 0; i < this.circles.length; i++) {
-            this.circles[i].x += deltaX;
-            this.circles[i].y += deltaY;
+    updateRaindrops() {
+        for (let i = 0; i < this.raindrops.length; i++) {
+            let raindrop = this.raindrops[i];
+
+            raindrop.x += raindrop.vx + this.wind;
+            raindrop.y += raindrop.vy;
         }
-        this.x += deltaX;
-        this.y += deltaY;
     }
 
-    drawUmbrella(p) {
+    renderRaindrops() {
+        this.p.noFill();
+        this.p.stroke(0, 0, this.colorSlider.value());
+        this.p.strokeCap(this.p.ROUND);
+        this.p.strokeWeight(this.boldSlider.value());
+        for (let i = 0; i < this.raindrops.length; i++) {
+            let raindrop = this.raindrops[i];
+
+            this.p.line(raindrop.x, raindrop.y-this.lengthSlider.value(), raindrop.x, raindrop.y);
+        }
+    }
+
+    colideRaindrops() {
+        for (let i = 0; i < this.raindrops.length; i++) {
+            let raindrop = this.raindrops[i];
+
+            if (raindrop.y > this.canvasHeight - this.groundHeight) {
+                this.wettings.push({
+                    x: raindrop.x,
+                    t: 0,
+                    tLimit: 1000
+                });
+                this.raindrops.splice(i, 1);
+                i--;
+                continue;
+            }
+        }
+    }
+
+    renderColideRange(x, y) {
+        this.p.noFill();
+        this.p.strokeWeight(1);
+        this.p.stroke(200, 0, 0);
+        this.p.circle(x, y - this.stickLength + this.stickLength/2, this.width);
+        this.p.line(x-this.width/2, y-this.stickLength, x+this.width/2, y-this.stickLength);
+    }
+
+    updateWettings() {
+        for (let i = 0; i < this.wettings.length; i++) {
+            let wetting = this.wettings[i];
+
+            wetting.t += this.getDeltaTime();
+
+            if (wetting.t > wetting.tLimit) {
+                this.wettings.splice(i, 1);
+                i--;
+                continue;
+            }
+        }
+    }
+
+    renderWettings() {
+        for (let i = 0; i < this.wettings.length; i++) {
+            let wetting = this.wettings[i];
+            this.p.fill(70, 60, 30, 255 * (1-wetting.t/wetting.tLimit));
+            this.p.arc(wetting.x, this.canvasHeight - this.groundHeight, 50, 50, 0, this.p.PI, this.p.PIE);
+        }
+    }
+
+    renderUmbrella(px, py) {
+        let p = this.p;
         p.noFill();
         p.stroke(0);
         p.strokeWeight(7);
-        let x = this.x;
-        let y = this.y;
-        let halfWidth = this.width / 2;
-        let halfHeight = this.height / 2;
-        p.line(x, y - halfHeight, x - halfWidth, y + halfHeight);
-        p.line(x, y - halfHeight, x + halfWidth, y + halfHeight);
 
-        let slope = this.height / 10;
-        let tipUniform = Math.floor(this.height / 8);
-        if (tipUniform % 2 === 0) tipUniform--;
-        let tipGap = this.width / tipUniform;
-        let tipX = x - halfWidth;
+        let x = px;
+        let y = py-this.stickLength;
 
-        for (let i = 0; i < tipUniform; i++) {
-            p.bezier(tipX, y + halfHeight, tipX + tipGap / 2, y + halfHeight - slope, tipX + tipGap / 2, y + halfHeight - slope, tipX + tipGap, y + halfHeight);
-            p.line(x, y - halfHeight, tipX, y + halfHeight);
-            tipX += tipGap;
+        p.line(x, y - this.height, x - this.width/2, y);
+        p.line(x, y - this.height, x + this.width/2, y);
+
+        for (let i = 0; i < 3; i++) {
+            p.bezier(
+                x - this.width/2 + i*this.width/3, y,
+                x - this.width/2 + this.width/3/2 + i*this.width/3, y-this.height/5,
+                x - this.width/2 + this.width/3/2 + i*this.width/3, y-this.height/5,
+                x - this.width/2 + this.width/3 + i*this.width/3, y
+            );
+
+            p.line(x, y - this.height, x - this.width/2 + this.width/3 + i*this.width/3, y);
         }
 
-        p.strokeWeight(6);
-        let stickLength = this.height * 1.5;
-        let gap = 5;
-        let gripWidth = this.width / 20;
-        let gripHeight = gripWidth * 0.8;
-        p.line(x, y + halfHeight + gap, x, y + halfHeight + stickLength + gap);
-        p.bezier(x, y + halfHeight + stickLength + gap, x, y + halfHeight + stickLength + gap + gripHeight, x + gripWidth, y + halfHeight + stickLength + gap + gripHeight, x + gripWidth, y + halfHeight + stickLength + gap);
+        p.line(x, y, x, y + this.stickLength);
+        p.bezier(
+            x, y + this.stickLength,
+            x, y + this.stickLength + 20,
+            x + 20, y + this.stickLength + 20,
+            x + 20, y + this.stickLength
+        );
     }
 
-    drawCollisionArea(p) {
-        for (let i = 0; i < this.circles.length; i++) {
-            let c = this.circles[i];
-            p.noFill();
-            p.stroke(0);
-            p.strokeWeight(1);
-            p.circle(c.x, c.y, c.r * 2);
-        }
-    }
+    initBuildings() {
 
-    addRandomRaindrop() {
-        if (this.raindropList.length < this.CREATE_LIMIT) {
-            let level = Math.floor(Math.random() * 6);
-            this.raindropList.push({
-                x: Math.floor(Math.random() * Gallery.getInst().canvasWidth),
-                y: 0,
-                v: level + 5,
-                b: 50 + 30 * level
-            });
-        }
-    }
+        for (let i = 0; i < 3; i++) {
+            let curX = 0;
 
-    updateRaindrop() {
-        for (let i = 0; i < this.raindropList.length; i++) {
-            let r = this.raindropList[i];
-            if (r.y - this.rdLen / 2 >= Gallery.getInst().canvasHeight - this.ground) {
-                this.wetList.push({
-                    x: r.x,
-                    t: 0
+            while (true) {
+                let width = this.p.random(20, 150);
+                let height = this.p.random(300-i*100, 400-i*100);
+
+                this.buildings.push({
+                    x: curX,
+                    w: width,
+                    h: height,
+                    r: 160 - i*30,
+                    g: 160 - i*30,
+                    b: 170 - i*30
                 });
-                this.raindropList.splice(i, 1);
-                i--;
-                continue;
-            }
-
-            for (let j = 0; j < this.circles.length; j++) {
-                if (this.isCollidedPointWithCircle(r.x, r.y, this.circles[j])) {
-                    let level = 3 + Math.floor(Math.random() * 3);
-                    let raindrop = {
-                        x: 0,
-                        y: this.y + this.height / 2 + 30,
-                        v: level + 5,
-                        b: 50 + 30 * level
-                    }
-                    let randomGap = Math.random() * 10;
-                    if (j === 0) {
-                        if (r.x <= this.x) {
-                            raindrop.x = this.x - this.width / 2 - randomGap;
-                        } else {
-                            raindrop.x = this.x + this.width / 2 + randomGap;
-                        }
-                    } else if (j % 2 === 1) {
-                        raindrop.x = this.x - this.width / 2 - randomGap;
-                    } else {
-                        raindrop.x = this.x + this.width / 2 + randomGap;
-                    }
-                    this.raindropList.push(raindrop);
-
-                    this.raindropList.splice(i, 1);
-                    i--;
-                    break;
-                }
-            }
-        }
-    }
-
-    drawRaindrop(p) {
-        for (let i = 0; i < this.raindropList.length; i++) {
-            let r = this.raindropList[i];
-            p.strokeWeight(this.rdWeight);
-            p.strokeCap(p.ROUND);
-            p.stroke(20, 20, r.b);
-            p.line(r.x, r.y, r.x, r.y - this.rdLen);
-            r.y += 2 + r.v;
-        }
-    }
     
-    drawGround(p) {
-        p.noStroke();
-        p.fill(100, 70, 70);
-        p.rect(0, Gallery.getInst().canvasHeight - this.ground, Gallery.getInst().canvasWidth, this.ground);
-    }
-
-    updateWet() {
-        for (let i = 0; i < this.wetList.length; i++) {
-            if (this.wetList[i].t >= this.disappearTime) {
-                this.wetList.splice(i, 1);
-                i--;
-                continue;
+                curX += width;
+    
+                if (curX > this.canvasWidth) break;
             }
-            this.wetList[i].t += this.deltaTime;
         }
+        console.log(this.buildings);
     }
 
-    drawWet(p) {
-        p.noStroke();
-        let size = this.ground / 3 * 2;
-        for  (let i = 0; i < this.wetList.length; i++) {
-            let w = this.wetList[i];
-            let color = w.t / (this.disappearTime / 20);
-            p.fill(60 + color, 30 + color / 2, 30 + color / 2);
-            p.arc(w.x, Gallery.getInst().canvasHeight - this.ground, size * 2, size, 0, p.PI);
+    renderBuildings() {
+        this.p.noStroke();
+        for (let i = 0; i < this.buildings.length; i++) {
+            let building = this.buildings[i];
+            this.p.fill(building.r, building.g, building.b);
+            this.p.rect(building.x, this.canvasHeight - this.groundHeight - building.h, building.w, building.h);
         }
-    }
-
-    isCollidedPointWithCircle(x, y, circle) {
-        if (Math.sqrt((circle.x - x) * (circle.x - x) + (circle.y - y) * (circle.y - y)) <= circle.r) return true;
-        return false;
-    }
-
-    isCollidedPointWithRect(x, y, rect) {
-        let left = rect.x - rect.width / 2;
-        let right = rect.x + rect.width / 2;
-        let top = rect.y - rect.height / 2;
-        let bottom = rect.y + rect.height / 2;
-        if (left <= x && x <= right && top <= y && y <= bottom) return true;
-        return false;
-    }
-
-    setup(p) {
-        super.setup(p);
-    }
-
-    draw(p) {
-        super.draw(p);
-        p.background(this.bgc.r, this.bgc.g, this.bgc.b);
-
-        if (p.mouseIsPressed) {
-            p.cursor('grabbing');
-            this.moveUmbrella(p.mouseX, p.mouseY);
-        } else {
-            p.cursor('grab');
-        }
-
-        this.drawUmbrella(p);
-
-        if (this.collisionAreaVisible) {
-            this.drawCollisionArea(p);
-        }
-
-        if (this.rdCreateTimer.timeover(this.getDeltaTime())) {
-            this.addRandomRaindrop();
-        }
-
-        this.updateRaindrop();
-        this.drawRaindrop(p);
-
-        this.drawGround(p);
-        
-        this.updateWet();
-        this.drawWet(p);
-    }
-
-    windowResized(p) {
-        this.ground = Gallery.getInst().canvasHeight / 20;
-        this.x = Gallery.getInst().canvasWidth / 2;
-        this.y = Gallery.getInst().canvasHeight / 2;
-        this.width = Gallery.getInst().canvasWidth / 4;
-        this.height = this.width / 4;
-        
-        this.circles = [];
-        this.initCollisionArea(10);
     }
 }

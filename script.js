@@ -89,7 +89,7 @@ class Gallery {
                 for (let i = 0; i < this.art.infoList.length; i++)
                     this.art.infoList[i].addClass('info hidden');
 
-                p.background(this.art.bgc.r, this.art.bgc.g, this.art.bgc.b);
+                p.background(this.art.backColor.r, this.art.backColor.g, this.art.backColor.b);
                 this.art.setup();
             }
 
@@ -99,7 +99,7 @@ class Gallery {
                     this.art.canvasHeight = this.canvasHeight = innerHeight;
                     
                     p.resizeCanvas(this.canvasWidth, this.canvasHeight);
-                    p.background(this.art.bgc.r, this.art.bgc.g, this.art.bgc.b);
+                    p.background(this.art.backColor.r, this.art.backColor.g, this.art.backColor.b);
                     this.art.setup();
                 }
                 this.art.draw();
@@ -121,11 +121,12 @@ class Gallery {
 }
 
 class Art {
-    constructor(red, green, blue) {
+    constructor() {
         this.sTime = new Date().getTime();
         this.eTime = new Date().getTime();
         this.deltaTime = this.eTime - this.sTime;
-        this.bgc = { r: red, g: green, b: blue };
+
+        this.backColor = { r: 255, g: 255, b: 255 };
 
         this.pressed = false;
         this.held = false;

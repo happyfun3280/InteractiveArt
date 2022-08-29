@@ -1,116 +1,93 @@
 class CosmosArt extends Art {
-    constructor(red, green, blue) {
-        super(red, green, blue);
-
-        this.ASTEROID_MAX = 40;
-        this.ASTEROID_VELOCITY_RANGE = 5;
-        this.PLANET_MAX_SIZE = 200;
-        this.asteroidList = [];
-
-        this.planetList = [];
-        this.planetSize = 0;
-        this.currPlanet = { x:0, y:0, s:0, r:0, g:0, b:0 };
+    constructor() {
+        super();
+        this.backColor = { r: 0, g: 0, b: 0 };
     }
 
-    setup(p) {
-        super.setup(p);
-
-        for (let i = 0; i < this.ASTEROID_MAX; i++) {
-            this.asteroidList.push({
-                x: p.random(0, Gallery.getInst().canvasWidth),
-                y: p.random(0, Gallery.getInst().canvasHeight),
-                vx: p.random(-this.ASTEROID_VELOCITY_RANGE, this.ASTEROID_VELOCITY_RANGE),
-                vy: p.random(-this.ASTEROID_VELOCITY_RANGE, this.ASTEROID_VELOCITY_RANGE)
-            })
-        }
-
-        p.noStroke();
-    }
-
-    draw(p) {
-        super.draw(p);
+    form() {
+        this.pushSetting(this.p.createDiv("Size : "), 30);
+        this.sizeSlider = this.p.createSlider(1, 100, 5);
+        this.pushSetting(this.sizeSlider, 40);
         
-        p.background(0);
-        for (let i = 0; i < this.ASTEROID_MAX; i++) {
-            this.asteroidList[i].x += this.asteroidList[i].vx;
-            this.asteroidList[i].y += this.asteroidList[i].vy;
-        }
+        this.pushSetting(this.p.createDiv("Color : "), 30);
+        this.colorSlider = this.p.createSlider(0, 255, 255);
+        this.pushSetting(this.colorSlider, 40);
 
-        this.checkWallCollision(p);
-        this.checkPlanetCollision(p);
+        this.pushSetting(this.p.createDiv("Force : "), 30);
+        this.forceSlider = this.p.createSlider(1, 20, 5);
+        this.pushSetting(this.forceSlider, 40);
+
+        this.pushSetting(this.p.createDiv("Number : "), 30);
+        this.numberSlider = this.p.createSlider(1, 500, 200);
+        this.pushSetting(this.numberSlider, 40);
+        this.numberSlider.input(() => {
+            this.asteroids = [];
+        });
+    }
+
+    setup() {
+        this.asteroids = [];
+    }
+
+    update() {
+        super.update();
+        this.p.background(0);
+        
+        this.createAsteroids();
         this.updateAsteroids();
+        this.renderAsteroids();
+        this.colideAsteroids();
+    }
 
-        if (this.pressed) {
-            this.currPlanet = {
-                x: p.mouseX,
-                y: p.mouseY,
-                s: 0,
-                r: p.random(50, 200),
-                g: 0,
-                b: p.random(50, 200)
-            }
-        }
+    initTouch() {
+        
+    }
 
-        if (this.held) {
-            this.currPlanet.s += 1;
-            if (this.currPlanet.s > this.PLANET_MAX_SIZE) this.currPlanet.s = this.PLANET_MAX_SIZE;
-        }
-
-        if (this.released) {
-            this.planetList.push(this.currPlanet);
-        }
-
-        p.fill(255);
-        for (let i = 0; i < this.ASTEROID_MAX; i++) {
-            p.circle(this.asteroidList[i].x, this.asteroidList[i].y, 3, 3);
-            //stroke(200, 0, 0);
-            //line(asteroidList[i].x, asteroidList[i].y, asteroidList[i].x + asteroidList[i].vx * 3, asteroidList[i].y + asteroidList[i].vy * 3);
-        }
-
-        p.fill(this.currPlanet.r, this.currPlanet.g, this.currPlanet.b);
-        p.noStroke();
-        p.circle(this.currPlanet.x, this.currPlanet.y, this.currPlanet.s, this.currPlanet.s);
-        for (let i = 0; i < this.planetList.length; i++) {    
-            p.fill(this.planetList[i].r, this.planetList[i].g, this.planetList[i].b);
-            p.circle(this.planetList[i].x, this.planetList[i].y, this.planetList[i].s, this.planetList[i].s);
+    updateTouch(touch) {
+        for (let i = 0; i < this.asteroids.length; i++) {
+            let asteroid = this.asteroids[i];
+            let distance = Math.sqrt(Math.pow(touch.x-asteroid.x, 2) + Math.pow(touch.y-asteroid.y, 2));
+            asteroid.vx += ((touch.x-asteroid.x) / (distance*20)) * this.forceSlider.value();
+            asteroid.vy += ((touch.y-asteroid.y) / (distance*20)) * this.forceSlider.value();
         }
     }
 
-    checkWallCollision(p) {
-        for (let i = 0; i < this.ASTEROID_MAX; i++) {
-            if (this.asteroidList[i].x < 0 || this.asteroidList[i].x > Gallery.getInst().canvasWidth || this.asteroidList[i].y < 0 || this.asteroidList[i].y > Gallery.getInst().canvasHeight) {
-                this.asteroidList[i] = {
-                    x: p.random(0, Gallery.getInst().canvasWidth),
-                    y: p.random(0, Gallery.getInst().canvasHeight),
-                    vx: p.random(-this.ASTEROID_VELOCITY_RANGE, this.ASTEROID_VELOCITY_RANGE),
-                    vy: p.random(-this.ASTEROID_VELOCITY_RANGE, this.ASTEROID_VELOCITY_RANGE)
-                }
-            }
-        }
-    }
-
-    checkPlanetCollision(p) {
-        for (let i = 0; i < this.ASTEROID_MAX; i++) {
-            for (let j = 0; j < this.planetList.length; j++) {
-                let distance = Math.sqrt(Math.pow((this.planetList[j].x - this.asteroidList[i].x), 2) + Math.pow((this.planetList[j].y - this.asteroidList[i].y), 2));
-                if (distance < this.planetList[j].s / 2) {
-                    this.asteroidList[i] = {
-                        x: p.random(0, Gallery.getInst().canvasWidth),
-                        y: p.random(0, Gallery.getInst().canvasHeight),
-                        vx: p.random(-this.ASTEROID_VELOCITY_RANGE, this.ASTEROID_VELOCITY_RANGE),
-                        vy: p.random(-this.ASTEROID_VELOCITY_RANGE, this.ASTEROID_VELOCITY_RANGE)
-                    }
-                }
-            }
+    createAsteroids() {
+        for (let i = this.asteroids.length-1; i < this.numberSlider.value(); i++) {
+            this.asteroids.push({
+                x: this.p.random(0, this.canvasWidth),
+                y: this.p.random(0, this.canvasHeight),
+                vx: this.p.random(-5, 5),
+                vy: this.p.random(-5, 5)
+            });
         }
     }
 
     updateAsteroids() {
-        for (let i = 0; i < this.ASTEROID_MAX; i++) {
-            for (let j = 0; j < this.planetList.length; j++) {
-                let distance = Math.sqrt(Math.pow((this.planetList[j].x - this.asteroidList[i].x), 2) + Math.pow((this.planetList[j].y - this.asteroidList[i].y), 2));
-                this.asteroidList[i].vx += (this.planetList[j].x - this.asteroidList[i].x) / distance / 1000 * this.planetList[j].s;
-                this.asteroidList[i].vy += (this.planetList[j].y - this.asteroidList[i].y) / distance / 1000 * this.planetList[j].s;
+        for (let i = 0; i < this.asteroids.length; i++) {
+            let asteroid = this.asteroids[i];
+
+            asteroid.x += asteroid.vx;
+            asteroid.y += asteroid.vy;
+        }
+    }
+
+    renderAsteroids() {
+        this.p.noStroke();
+        this.p.fill(this.colorSlider.value());
+        for (let i = 0; i < this.asteroids.length; i++) {
+            let asteroid = this.asteroids[i];
+            this.p.circle(asteroid.x, asteroid.y, this.sizeSlider.value());
+        }
+    }
+
+    colideAsteroids() {
+        for (let i = 0; i < this.asteroids.length; i++) {
+            let asteroid = this.asteroids[i];
+            if (asteroid.x < 0 || asteroid.x > this.canvasWidth || asteroid.y < 0 || asteroid.y > this.canvasHeight) {
+                this.asteroids.splice(i, 1);
+                i--;
+                continue;
             }
         }
     }

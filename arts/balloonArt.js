@@ -1,6 +1,7 @@
 class BalloonArt extends Art {
-    constructor(red, green, blue) {
-        super(red, green, blue);
+    constructor() {
+        super();
+        this.backColor = { r: 200, g: 200, b: 255 };
     }
 
     form() {
@@ -22,7 +23,7 @@ class BalloonArt extends Art {
     }
 
     update() {
-        this.p.background(this.bgc.r, this.bgc.b, this.bgc.r);
+        this.p.background(this.backColor.r, this.backColor.g, this.backColor.b);
         super.update();
     }
 

@@ -1,10 +1,7 @@
 class CircleArt extends Art {
-    constructor(red, green, blue, settings) {
-        super(red, green, blue);
-
-        this.circleList = [];
-
-        this.timer = new Timer(30);
+    constructor() {
+        super();
+        this.backColor = { r: 120, g: 120, b: 230 };
     }
     
     form() {
@@ -37,6 +34,9 @@ class CircleArt extends Art {
     }
 
     setup(p) {
+        this.circleList = [];
+        this.timer = new Timer(30);
+
         this.p.noStroke();
     }
 

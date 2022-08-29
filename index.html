@@ -16,6 +16,8 @@
     <script src="./arts/cosmosArt.js"></script>
     <script src="./arts/buttonArt.js"></script>
     <script src="./arts/aimingArt.js"></script>
+    <script src="./arts/confusingMovingArt.js"></script>
+    <script src="./arts/sampleArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -55,30 +57,14 @@
             <img src="./imgs/aimingArt.png" alt="">
             <span class="title dark">Sol Chan</span>
         </span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
-        <span class="card blank"></span>
+        <span id="confusingMovingArt" class="card">
+            <img src="./imgs/confusingMovingArt.png" alt="">
+            <span class="title dark">Sol Chan</span>
+        </span>
+        <span id="sampleArt" class="card">
+            <img src="./imgs/confusingMovingArt.png" alt="">
+            <span class="title dark">Sol Chan</span>
+        </span>
         <span class="card blank"></span>
         <span class="card blank"></span>
         <span class="card blank"></span>
@@ -110,28 +96,34 @@
         Gallery.getInst().setContainers(p5Container, mainContainer);
 
         document.getElementById("balloonArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new BalloonArt(200, 200, 255));
+            Gallery.getInst().openArt(new BalloonArt());
         })
         document.getElementById("circleArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new CircleArt(120, 120, 230, { maxSize: 120, blueTime: 30, redTime: 50 }));
+            Gallery.getInst().openArt(new CircleArt());
         })
         document.getElementById("umbrellaArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new UmbrellaArt(177, 179, 187, { rdLen: 10, rdWeight: 5, rdTime: 50, visible: false }));
+            Gallery.getInst().openArt(new UmbrellaArt());
         })
         document.getElementById("rectangleArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new RectangleArt(255, 255, 255, {}));
+            Gallery.getInst().openArt(new RectangleArt());
         })
         document.getElementById("mirrorArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new MirrorArt(220, 220, 220, {}));
+            Gallery.getInst().openArt(new MirrorArt());
         })
         document.getElementById("cosmosArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new CosmosArt(0, 0, 0, {}));
+            Gallery.getInst().openArt(new CosmosArt());
         })
         document.getElementById("buttonArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new ButtonArt(220, 220, 220, {}));
+            Gallery.getInst().openArt(new ButtonArt());
         })
         document.getElementById("aimingArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new AimingArt(255, 255, 255, {}));
+            Gallery.getInst().openArt(new AimingArt());
+        })
+        document.getElementById("confusingMovingArt").addEventListener("click", (e) => {
+            Gallery.getInst().openArt(new ConfusingMovingArt());
+        })
+        document.getElementById("sampleArt").addEventListener("click", (e) => {
+            Gallery.getInst().openArt(new SampleArt());
         })
     </script>
 </body>

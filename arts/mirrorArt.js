@@ -1,6 +1,7 @@
 class MirrorArt extends Art {
-    constructor(red, green, blue) {
-        super(red, green, blue);
+    constructor() {
+        super();
+        this.backColor = { r: 220, g: 220, b: 220 };
     }
 
     form() {

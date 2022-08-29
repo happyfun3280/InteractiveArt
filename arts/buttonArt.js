@@ -1,8 +1,6 @@
 class ButtonArt extends Art {
-    constructor(red, green, blue) {
-        super(red, green, blue);
-
-        this.btnList = [];
+    constructor() {
+        super();
     }
 
     form() {
@@ -42,6 +40,7 @@ class ButtonArt extends Art {
     }
 
     setup() {
+        this.btnList = [];
         this.initBtn();
     }
 
@@ -50,7 +49,7 @@ class ButtonArt extends Art {
 
         let p = this.p;
 
-        p.background(this.bgc.r, this.bgc.g, this.bgc.b);
+        p.background(this.backColor.r, this.backColor.g, this.backColor.b);
 
         for (let btn of this.btnList) {
             if (!btn.pushed) continue;
