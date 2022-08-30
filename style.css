@@ -24,7 +24,7 @@ body {
                             "rect circ mirr"
                             "butt cosm cosm"
                             "aimi cosm cosm"
-                            "conf .    .   ";
+                            "conf boun .   ";
     }
 }
 
@@ -36,7 +36,7 @@ body {
                             "ball ball circ umbr"
                             "butt mirr cosm cosm"
                             "aimi conf cosm cosm"
-                            ".    .    .    .   "
+                            "boun .    .    .   "
                             ".    .    .    .   ";
     }
 }
@@ -47,7 +47,7 @@ body {
         grid-auto-rows: 19vw;
         grid-template-areas:"ball ball butt umbr rect" 
                             "ball ball circ umbr aimi"
-                            ".    mirr cosm cosm conf"
+                            "boun mirr cosm cosm conf"
                             ".    .    cosm cosm .   "
                             ".    .    .    .    .   "
                             ".    .    .    .    .   ";
@@ -59,7 +59,7 @@ body {
         grid-template-columns: 16vw 16vw 16vw 16vw 16vw 16vw;
         grid-auto-rows: 16vw;
         grid-template-areas:"ball ball butt umbr rect aimi" 
-                            "ball ball circ umbr conf .   "
+                            "ball ball circ umbr conf boun"
                             ".    mirr cosm cosm .    .   "
                             ".    .    cosm cosm .    .   "
                             ".    .    .    .    .    .   "
@@ -134,6 +134,7 @@ body {
 #buttonArt { grid-area: butt; }
 #aimingArt { grid-area: aimi; }
 #confusingMovingArt { grid-area: conf; }
+#bounceArt { grid-area: boun; };
 
 #p5Container {
     overflow: hidden;

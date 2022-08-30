@@ -78,8 +78,6 @@ class UmbrellaArt extends Art {
     }
 
     initTouch(touch) {
-        touch.prevX = touch.x;
-        touch.prevY = touch.y;
     }
 
     updateTouch(touch) {
@@ -245,7 +243,6 @@ class UmbrellaArt extends Art {
                 if (curX > this.canvasWidth) break;
             }
         }
-        console.log(this.buildings);
     }
 
     renderBuildings() {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 user-scalable=0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
     <script src="./script.js"></script>
@@ -17,6 +17,9 @@
     <script src="./arts/buttonArt.js"></script>
     <script src="./arts/aimingArt.js"></script>
     <script src="./arts/confusingMovingArt.js"></script>
+    <script src="./arts/bounceArt.js"></script>
+    <script src="./arts/grubberStretchingArt.js"></script>
+    <script src="./arts/topSpinningArt.js"></script>
     <script src="./arts/sampleArt.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -25,45 +28,55 @@
     <div id="p5Container"></div>
 
     <div id="container">
-        <span id="balloonArt" class="card">
+        <span id="balloonArt" onclick="Gallery.getInst().openArt(new BalloonArt());" class="card">
             <img src="./imgs/balloonArt.png" alt="">
             <span class="title dark">Sol Chan</span>
         </span>
-        <span id="circleArt" class="card">
+        <span id="circleArt" onclick="Gallery.getInst().openArt(new CircleArt());" class="card">
             <img src="./imgs/circleArt.png" alt="">
             <span class="title">Chan Hee</span>
         </span>
-        <span id="umbrellaArt" class="card">
+        <span id="umbrellaArt" onclick="Gallery.getInst().openArt(new UmbrellaArt());" class="card">
             <img src="./imgs/umbrellaArt.png" alt="">
             <span class="title">Chan Hee</span>
         </span>
-        <span id="rectangleArt" class="card">
+        <span id="rectangleArt" onclick="Gallery.getInst().openArt(new RectangleArt());" class="card">
             <img src="./imgs/rectangleArt.png" alt="">
             <span class="title dark">Sol Chan</span>
         </span>
-        <span id="mirrorArt" class="card">
+        <span id="mirrorArt" onclick="Gallery.getInst().openArt(new MirrorArt());" class="card">
             <img src="./imgs/mirrorArt.png" alt="">
             <span class="title dark">Chan Hee</span>
         </span>
-        <span id="cosmosArt" class="card">
+        <span id="cosmosArt" onclick="Gallery.getInst().openArt(new CosmosArt());" class="card">
             <img src="./imgs/cosmosArt.png" alt="">
             <span class="title">Chan Hee</span>
         </span>
-        <span id="buttonArt" class="card">
+        <span id="buttonArt" onclick="Gallery.getInst().openArt(new ButtonArt());" class="card">
             <img src="./imgs/buttonArt.png" alt="">
             <span class="title">Chan Hee</span>
         </span>
-        <span id="aimingArt" class="card">
+        <span id="aimingArt" onclick="Gallery.getInst().openArt(new AimingArt());" class="card">
             <img src="./imgs/aimingArt.png" alt="">
             <span class="title dark">Sol Chan</span>
         </span>
-        <span id="confusingMovingArt" class="card">
+        <span id="confusingMovingArt" onclick="Gallery.getInst().openArt(new ConfusingMovingArt());" class="card">
             <img src="./imgs/confusingMovingArt.png" alt="">
             <span class="title dark">Sol Chan</span>
         </span>
-        <span id="sampleArt" class="card">
-            <img src="./imgs/confusingMovingArt.png" alt="">
+        <span id="bounceArt" onclick="Gallery.getInst().openArt(new BounceArt());" class="card">
+            <img src="./imgs/bounceArt.png" alt="">
+            <span class="title">Jae Yun</span>
+        </span>
+        <span id="grubberStretchingArt" onclick="Gallery.getInst().openArt(new GrubberStretchingArt());" class="card">
+            <img src="./imgs/grubberStretchingArt.png" alt="">
             <span class="title dark">Sol Chan</span>
+        </span>
+        <span id="topSpinningArt" onclick="Gallery.getInst().openArt(new TopSpinningArt());" class="card">
+            <img src="./imgs/topSpinningArt.png" alt="">
+            <span class="title">Jae Yun</span>
+        </span>
+        <span id="sampleArt" onclick="Gallery.getInst().openArt(new SampleArt());" class="card">
         </span>
         <span class="card blank"></span>
         <span class="card blank"></span>
@@ -91,40 +104,16 @@
             }
         }, { passive: false });
 
+        
+        document.body.addEventListener('touchmove', function (e) {
+            if (Gallery.getInst().p !== undefined) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
         const p5Container = document.getElementById("p5Container");
         const mainContainer = document.getElementById("container");
         Gallery.getInst().setContainers(p5Container, mainContainer);
-
-        document.getElementById("balloonArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new BalloonArt());
-        })
-        document.getElementById("circleArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new CircleArt());
-        })
-        document.getElementById("umbrellaArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new UmbrellaArt());
-        })
-        document.getElementById("rectangleArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new RectangleArt());
-        })
-        document.getElementById("mirrorArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new MirrorArt());
-        })
-        document.getElementById("cosmosArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new CosmosArt());
-        })
-        document.getElementById("buttonArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new ButtonArt());
-        })
-        document.getElementById("aimingArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new AimingArt());
-        })
-        document.getElementById("confusingMovingArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new ConfusingMovingArt());
-        })
-        document.getElementById("sampleArt").addEventListener("click", (e) => {
-            Gallery.getInst().openArt(new SampleArt());
-        })
     </script>
 </body>
 

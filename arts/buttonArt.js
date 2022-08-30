@@ -1,6 +1,8 @@
 class ButtonArt extends Art {
     constructor() {
         super();
+
+        this.backColor = { r: 230, g: 230, b: 230 };
     }
 
     form() {
@@ -48,8 +50,8 @@ class ButtonArt extends Art {
         super.update();
 
         let p = this.p;
-
         p.background(this.backColor.r, this.backColor.g, this.backColor.b);
+
 
         for (let btn of this.btnList) {
             if (!btn.pushed) continue;

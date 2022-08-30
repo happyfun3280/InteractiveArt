@@ -1,4 +1,4 @@
-class SampleArt extends Art {
+class TopSpinningArt extends Art {
     constructor() {
         super();
         this.backColor = { r: 255, g: 255, b: 255 }
