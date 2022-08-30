@@ -183,12 +183,12 @@ class Art {
 
     touchStarted(event) {
         if (event.changedTouches == undefined) {
-            this.touchObjList.splice(0, 0, {
+            this.touchObjList.push({
                 id: -1,
                 x: event.clientX,
                 y: event.clientY
-            })
-            this.initTouch(this.touchObjList[0]);
+            });
+            this.initTouch(this.touchObjList[this.touchObjList.length-1]);
         } else {
             for (let i = 0; i < event.changedTouches.length; i++) {
                 this.touchObjList.push({
@@ -204,8 +204,11 @@ class Art {
 
     touchMoved(event) {
         if (event.changedTouches == undefined) {
-            this.touchObjList[0].x = event.clientX;
-            this.touchObjList[0].y = event.clientY;
+            for (let i = 0; i < this.touchObjList.length; i++) {
+                if (this.touchObjList[i].id !== -1) continue;
+                this.touchObjList[i].x = event.clientX;
+                this.touchObjList[i].y = event.clientY;
+            }
         } else {
             for (let i = 0; i < event.changedTouches.length; i++) {
                 for (let j = 0; j < this.touchObjList.length; j++) {
@@ -222,7 +225,12 @@ class Art {
 
     touchEnded(event) {
         if (event.changedTouches == undefined) {
-            this.touchObjList.splice(0, 1);
+            for (let i = 0; i < this.touchObjList.length; i++) {
+                if (this.touchObjList[i].id !== -1) continue;
+                this.touchObjList.splice(i, 1);
+                i--;
+                continue;
+            }
         } else {
             for (let i = 0; i < event.changedTouches.length; i++) {
                 for (let j = 0; j < this.touchObjList.length; j++) {
