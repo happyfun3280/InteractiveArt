@@ -24,7 +24,10 @@ body {
                             "rect circ mirr"
                             "butt cosm cosm"
                             "aimi cosm cosm"
-                            "conf boun .   ";
+                            "conf boun open"
+                            "grub tops ligh"
+                            "life life .   "
+                            "life life .   ";
     }
 }
 
@@ -36,8 +39,9 @@ body {
                             "ball ball circ umbr"
                             "butt mirr cosm cosm"
                             "aimi conf cosm cosm"
-                            "boun .    .    .   "
-                            ".    .    .    .   ";
+                            "boun open grub tops"
+                            "ligh life life .   "
+                            ".    life life .   ";
     }
 }
 
@@ -48,9 +52,9 @@ body {
         grid-template-areas:"ball ball butt umbr rect" 
                             "ball ball circ umbr aimi"
                             "boun mirr cosm cosm conf"
-                            ".    .    cosm cosm .   "
-                            ".    .    .    .    .   "
-                            ".    .    .    .    .   ";
+                            "grub tops cosm cosm open"
+                            "ligh life life .    .   "
+                            ".    life life .    .   ";
     }
 }
 
@@ -60,9 +64,9 @@ body {
         grid-auto-rows: 16vw;
         grid-template-areas:"ball ball butt umbr rect aimi" 
                             "ball ball circ umbr conf boun"
-                            ".    mirr cosm cosm .    .   "
-                            ".    .    cosm cosm .    .   "
-                            ".    .    .    .    .    .   "
+                            "grub mirr cosm cosm open .   "
+                            "tops ligh cosm cosm life life"
+                            ".    .    .    .    life life"
                             ".    .    .    .    .    .   ";
     }
 }
@@ -115,7 +119,7 @@ body {
 }
 
 .card > .title.dark {
-    color: rgba(0, 0, 0, 0.6)
+    color: rgba(0, 0, 0, 0.8)
 }
 
 .card > .title::before {
@@ -135,6 +139,11 @@ body {
 #aimingArt { grid-area: aimi; }
 #confusingMovingArt { grid-area: conf; }
 #bounceArt { grid-area: boun; };
+#grubberStretchingArt { grid-area: grub; }
+#topSpinningArt { grid-area: tops; }
+#openningArt { grid-area: open; };
+#lightsArt { grid-area: ligh; }
+#lifegameArt { grid-area: life; }
 
 #p5Container {
     overflow: hidden;

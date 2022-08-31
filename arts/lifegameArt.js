@@ -1,4 +1,4 @@
-class SampleArt extends Art {
+class LifegameArt extends Art {
     constructor() {
         super();
         this.backColor = { r: 106, g: 102, b: 87 }
