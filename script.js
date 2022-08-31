@@ -220,7 +220,7 @@ class Art {
     }
 
     touchEnded(event) {
-        if (event.changedTouches === undefined) {
+        if (event.changedTouches == undefined) {
             for (let i = 0; i < this.touchObjList.length; i++) {
                 if (this.touchObjList[i].id !== -1) continue;
                 this.touchObjList.splice(i, 1);
