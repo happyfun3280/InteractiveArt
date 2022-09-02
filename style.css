@@ -26,8 +26,10 @@ body {
                             "aimi cosm cosm"
                             "conf boun open"
                             "grub tops ligh"
-                            "life life .   "
-                            "life life .   ";
+                            "life life suns"
+                            "life life fire"
+                            "pixe pixe .   "
+                            "pixe pixe .   ";
     }
 }
 
@@ -40,8 +42,10 @@ body {
                             "butt mirr cosm cosm"
                             "aimi conf cosm cosm"
                             "boun open grub tops"
-                            "ligh life life .   "
-                            ".    life life .   ";
+                            "ligh life life suns"
+                            "fire life life .   "
+                            "pixe pixe .    .   "
+                            "pixe pixe .    .   ";
     }
 }
 
@@ -53,8 +57,9 @@ body {
                             "ball ball circ umbr aimi"
                             "boun mirr cosm cosm conf"
                             "grub tops cosm cosm open"
-                            "ligh life life .    .   "
-                            ".    life life .    .   ";
+                            "ligh life life pixe pixe"
+                            "suns life life pixe pixe"
+                            "fire .    .    .    .   ";
     }
 }
 
@@ -64,10 +69,10 @@ body {
         grid-auto-rows: 16vw;
         grid-template-areas:"ball ball butt umbr rect aimi" 
                             "ball ball circ umbr conf boun"
-                            "grub mirr cosm cosm open .   "
+                            "grub mirr cosm cosm open suns"
                             "tops ligh cosm cosm life life"
-                            ".    .    .    .    life life"
-                            ".    .    .    .    .    .   ";
+                            "pixe pixe fire .    life life"
+                            "pixe pixe .    .    .    .   ";
     }
 }
 
@@ -144,6 +149,9 @@ body {
 #openningArt { grid-area: open; };
 #lightsArt { grid-area: ligh; }
 #lifegameArt { grid-area: life; }
+#pixelArt { grid-area: pixe; }
+#sunsetArt {grid-area: suns; }
+#fireflyArt { gird-area: fire; }
 
 #p5Container {
     overflow: hidden;

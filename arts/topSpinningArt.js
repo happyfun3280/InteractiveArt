@@ -15,37 +15,35 @@ class TopSpinningArt extends Art {
         this.makeBrush();
         this.p.rect(0, 0, this.canvasWidth, this.canvasHeight, 50);
         this.p.noiseDetail(3, 0.5)
+
+        this.count = 0;
     }
 
     update() {
         super.update();
-    }
+        if (this.p.mouseIsPressed) {
 
-    initTouch(touch) {
-        touch.count = 0;
-    }
-
-    updateTouch(touch) {
-        for (var i = 0; i < 10; i++) {
-            var x = touch.x + this.p.map(this.p.noise(touch.count * 0.0025, 1.5), 0, 1, -1, 1) * 100;
-            var y = touch.y + this.p.map(this.p.noise(touch.count * 0.0025, 2.5), 0, 1, -1, 1) * 100;
-            var a = this.p.noise(touch.count * 0.001, 3.5) * this.p.TWO_PI * 10;
-            var s = this.p.noise(touch.count * 0.025, 4.5);
-            var hue = this.p.map(this.p.noise(touch.count * 0.01, 5.5), 0.33, 0.66, 0, 1);
-            this.p.tint(hue, 0.25, 1, this.p.noise(touch.count * 0.001, 7.5) * 0.5);
-            this.p.push();
-            this.p.translate(x, y);
-            this.p.rotate(a);
-            this.p.scale(s, s)
-            this.p.image(this.brush, 0, 0);
-            this.p.pop();
-            this.p.push();
-            this.p.translate(this.canvasWidth - x, y);
-            this.p.rotate(-a);
-            this.p.scale(-s, s)
-            this.p.image(this.brush, 0, 0);
-            this.p.pop();
-            touch.count++;
+            for (var i = 0; i < 10; i++) {
+                var x = this.p.mouseX + this.p.map(this.p.noise(this.count * 0.0025, 1.5), 0, 1, -1, 1) * 100;
+                var y = this.p.mouseY + this.p.map(this.p.noise(this.count * 0.0025, 2.5), 0, 1, -1, 1) * 100;
+                var a = this.p.noise(this.count * 0.001, 3.5) * this.p.TWO_PI * 10;
+                var s = this.p.noise(this.count * 0.025, 4.5);
+                var hue = this.p.map(this.p.noise(this.count * 0.01, 5.5), 0.33, 0.66, 0, 1);
+                this.p.tint(hue, 0.25, 1, this.p.noise(this.count * 0.001, 7.5) * 0.5);
+                this.p.push();
+                this.p.translate(x, y);
+                this.p.rotate(a);
+                this.p.scale(s, s)
+                this.p.image(this.brush, 0, 0);
+                this.p.pop();
+                this.p.push();
+                this.p.translate(this.canvasWidth - x, y);
+                this.p.rotate(-a);
+                this.p.scale(-s, s)
+                this.p.image(this.brush, 0, 0);
+                this.p.pop();
+                this.count++;
+            }
         }
     }
 

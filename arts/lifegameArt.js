@@ -17,30 +17,28 @@ class LifegameArt extends Art {
         this.startbinary = 0;
         this.setupnumber = 0;
         this.dm = 1;
-        this.linenumber = 11;
+        this.linenumber = 25;
         this.k = 0;
+        this.p.background(25);
         this.lines = this.linenumber;
-        let button1 = this.p.createButton('Start / Stop');
-        button1.position(0, 400);
-        button1.mousePressed(() => this.Start());
-        let button2 = this.p.createButton('Random');
-        button2.position(90, 400);
-        button2.mousePressed(() => this.randomfill());
-        let button3 = this.p.createButton('Clear');
-        button3.position(165, 400);
-        button3.mousePressed(() => this.cellclear());
-        let button4 = this.p.createButton('Draw Mode');
-        button4.position(225, 400);
-        button4.mousePressed(() => this.drawmode());
-        let button5 = this.p.createButton('Erase Mode');
-        button5.position(320, 400);
-        button5.mousePressed(() => this.erasemode());
-        let button6 = this.p.createButton('Change Size');
-        button6.position(420, 400);
-        button6.mousePressed(() => this.change());
+        let button = this.p.createButton('Start / Stop');
+        button.position(0, this.canvasHeight - 103);
+        button.mousePressed(() => this.Start());
+        button = this.p.createButton('Random');
+        button.position(90, this.canvasHeight - 103);
+        button.mousePressed(() => this.randomfill());
+        button = this.p.createButton('Clear');
+        button.position(165, this.canvasHeight - 103);
+        button.mousePressed(() => this.cellclear());
+        button = this.p.createButton('Draw Mode');
+        button.position(225, this.canvasHeight - 103);
+        button.mousePressed(() => this.drawmode());
+        button = this.p.createButton('Erase Mode');
+        button.position(320, this.canvasHeight - 103);
+        button.mousePressed(() => this.erasemode());
         this.cellclear();
-        this.columns = Math.floor(940 / this.linenumber);
-        this.rows = Math.floor(400 / this.linenumber);
+        this.columns = 61;
+        this.rows = 28;
         this.board = new Array(this.columns);
         for (let i = 0; i < this.columns; i++) {
             this.board[i] = new Array(this.rows);
@@ -54,7 +52,7 @@ class LifegameArt extends Art {
 
     update() {
         super.update();
-        let p = this.p; 
+        let p = this.p;
 
         p.background(255);
         if (this.setupnumber == 0) this.cellclear();
@@ -90,57 +88,50 @@ class LifegameArt extends Art {
             else this.cellerase();
         }
     }
-
     celldraw() {
-        if (this.dm == 1 && this.p.mouseIsPressed == true) {
-            this.board[Math.floor(this.p.mouseX / this.linenumber)][Math.floor(this.p.mouseY / this.linenumber)] = 1;
-            this.nextboard[Math.floor(this.p.mouseX / this.linenumber)][Math.floor(this.p.mouseY / this.linenumber)] = 0;
+        let p = this.p;
+        if (this.dm == 1 && p.mouseIsPressed == true) {
+            this.board[Math.floor(p.mouseX / this.linenumber)][Math.floor(p.mouseY / this.linenumber)] = 1;
+            this.nextboard[Math.floor(p.mouseX / this.linenumber)][Math.floor(p.mouseY / this.linenumber)] = 0;
         }
     }
-
     cellerase() {
-        if (this.dm == 2 && this.p.mouseIsPressed == true) {
-            this.board[Math.floor(this.p.mouseX / this.linenumber)][Math.floor(this.p.mouseY / this.linenumber)] = 0;
-            this.nextboard[Math.floor(this.p.mouseX / this.linenumber)][Math.floor(this.p.mouseY / this.linenumber)] = 1;
+        let p = this.p;
+        if (this.dm == 2 && p.mouseIsPressed == true) {
+            this.board[Math.floor(p.mouseX / this.linenumber)][Math.floor(p.mouseY / this.linenumber)] = 0;
+            this.nextboard[Math.floor(p.mouseX / this.linenumber)][Math.floor(p.mouseY / this.linenumber)] = 1;
         }
     }
-
     //mouseClicked() {
-    // if (this.dm == 2 && this.board[int(Math.floor(this.p.mouseX / this.linenumber))][int(Math.floor(this.p.mouseY / this.linenumber))] == 1) {
-    // this.board[int(Math.floor(this.p.mouseX / this.linenumber))][int(Math.floor(this.p.mouseY / this.linenumber))] = 0;
+    //   if   (this.dm   ==   2   &&   this.board[int(floor(p.mouseX   /   this.linenumber))][int(floor(p.mouseY   / this.linenumber))] == 1) {
+    // this.board[int(floor(p.mouseX / this.linenumber))][int(floor(p.mouseY / this.linenumber))] = 0;
     // }
     //}
-
     change() {
         this.k++;
         if (this.k % 2 == 1) this.linenumber = 7;
         else if (this.k % 2 == 0) this.linenumber = 11;
         this.setup();
     }
-
     drawmode() {
         this.dm = 1;
     }
-
     erasemode() {
         this.dm = 2;
     }
-
     Start() {
         this.startbinary++;
         if (this.startbinary % 2 == 1) this.start = 1;
         else this.start = 0;
     }
-
     cellclear() {
         this.setupnumber = 1;
         for (let i = 1; i < this.columns - 1; i++) {
             for (let j = 1; j < this.rows - 1; j++) {
-                this.board[i][j] = 0;
+                this.board[i][j] = 0
             }
         }
     }
-
     randomfill() {
         for (let i = 0; i < this.columns; i++) {
             for (let j = 0; j < this.rows; j++) {
@@ -150,8 +141,6 @@ class LifegameArt extends Art {
             }
         }
     }
-
-
     next() {
         for (let x = 1; x < this.columns - 1; x++) {
             for (let y = 1; y < this.rows - 1; y++) {
@@ -180,5 +169,4 @@ class LifegameArt extends Art {
         this.board = this.nextboard;
         this.nextboard = temp;
     }
-
 }
